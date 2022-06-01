@@ -9,7 +9,7 @@ c. Descripción de cada archivo *.java comprendido en solución del problema
 d. Conclusiones
 
 # Integrantes
-Avila, Agustin Alejo
+Avila, Agustin Alejo (Profe)
 Bailaque, Ivan Nicolas
 Florentin Fajardo, Leandro
 Hittaller, Ramiro
