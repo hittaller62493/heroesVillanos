@@ -1,9 +1,9 @@
 public class Atributo implements Comparable<Atributo> {
 
     private Caracteristica caracteristica;
-    private int puntaje;
+    private double puntaje;
 
-    public Atributo(Caracteristica atrib, int i) {
+    public Atributo(Caracteristica atrib, double i) {
         this.caracteristica = atrib;
         this.puntaje = i;
     }
@@ -16,21 +16,28 @@ public class Atributo implements Comparable<Atributo> {
         this.caracteristica = carac;
     }
 
-    public int getPuntos() {
+    public double getPuntos() {
         return puntaje;
     }
 
-    public void setPuntos(int valor) {
+    public void setPuntos(double valor) {
         this.puntaje = valor;
     }
 
-    public void incrementarPuntos(int valor) {
+    public void incrementarPuntos(double valor) {
         this.puntaje += valor;
     }
 
     @Override
     public int compareTo(Atributo o) {
-        return Integer.compare(this.getPuntos(), o.getPuntos());
+        return Double.compare(this.getPuntos(), o.getPuntos());
     }
+
+    @Override
+    public String toString() {
+        return "Atributo [caracteristica=" + caracteristica + ", puntaje=" + puntaje + "]";
+    }
+
+    
 
 }

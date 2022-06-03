@@ -9,8 +9,8 @@ public abstract class Competidor {
 	private List<Atributo> atributos = new ArrayList<Atributo>();
 	
 
-	public Competidor(String nombreReal, String nombrePersonaje, int velocidad, int fuerza, int resistencia,
-			int destreza) {
+	public Competidor(String nombreReal, String nombrePersonaje, double velocidad, double fuerza, double resistencia,
+			double destreza) {
 		this.nombreReal = nombreReal;
 		this.nombrePersonaje = nombrePersonaje;
 		atributos.add(new Atributo(Caracteristica.VELOCIDAD, velocidad));
@@ -28,6 +28,10 @@ public abstract class Competidor {
 	}
 
 	public int competir(Competidor competidor, Caracteristica caracteristica) {
+		// if (this.getClass().equals(competidor.getClass())){
+		// 	throw new Error("leo gato");
+		// } EXCEPCIONES
+
 		int index = getIndex(caracteristica);
 		if (recorrerDesde(competidor, index) == 0){
 			return recorrerDesde(competidor, 0);
@@ -84,7 +88,10 @@ public abstract class Competidor {
 	public void setAtributos(List<Atributo> atributos) {
 		this.atributos = atributos;
 	}
-
-	
+	@Override
+	public String toString() {
+		return "Competidor [atributos=" + atributos + ", nombrePersonaje=" + nombrePersonaje + ", nombreReal="
+				+ nombreReal + "]";
+	}
 
 }
