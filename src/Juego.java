@@ -19,10 +19,20 @@ public class Juego {
 		// 	}
 		// }
 
-		Personaje heroe1 = new Heroe("HeroeReal", "Heroe", 100, 50, 80, 80);
-		Personaje villano1 = new Villano("VillanoReal", "Villano", 100, 50, 75, 80);
+		Personaje heroe1 = new Heroe("HeroeReal", "Heroe", 100, 80, 80, 80);
+		Personaje villano1 = new Villano("VillanoReal", "Villano", 100, 80, 80, 80); // EMPATE 0
 
-		heroe1.competir(villano1, Caracteristica.FUERZA);
+		Personaje heroe2 = new Heroe("HeroeReal", "Heroe", 120, 80, 80, 80);
+		Personaje villano2 = new Villano("VillanoReal", "Villano", 100, 80, 80, 80);
+
+
+		System.out.println(heroe1.competir(villano1, Caracteristica.DESTREZA));
+		System.out.println(heroe2.competir(villano2, Caracteristica.DESTREZA));
+
+
+		
+
+		// heroe1.competir(villano1, Caracteristica.FUERZA);
 		
 
 	}
