@@ -1,6 +1,10 @@
+package clases;
 
 import java.util.List;
 import java.util.ListIterator;
+
+import excepciones.*;
+
 import java.util.ArrayList;
 
 public abstract class Competidor {
@@ -11,15 +15,25 @@ public abstract class Competidor {
 
 	public Competidor(String nombreReal, String nombrePersonaje, double velocidad, double fuerza, double resistencia,
 			double destreza) {
-		this.nombreReal = nombreReal;
-		this.nombrePersonaje = nombrePersonaje;
+		setNombreReal(nombreReal);
+		setNombrePersonaje(nombrePersonaje);
+		setAtributos(velocidad, fuerza, resistencia, destreza);
+
+	}
+
+	private void setAtributos(double velocidad, double fuerza, double resistencia, double destreza) {
+		if (velocidad < 0 || fuerza < 0 || resistencia < 0 || destreza < 0)
+			throw new CaracteristicaInvalidaEx("Uno o más atributos indicados no son válidos.");
 		atributos.add(new Atributo(Caracteristica.VELOCIDAD, velocidad));
 		atributos.add(new Atributo(Caracteristica.FUERZA, fuerza));
 		atributos.add(new Atributo(Caracteristica.RESISTENCIA, resistencia));
 		atributos.add(new Atributo(Caracteristica.DESTREZA, destreza));
-
 	}
+
+
 	public Competidor(String nombre) {
+		if (nombre.isBlank() || nombre.isEmpty() || nombre == null)
+			throw new NombreInvalidoEx("El nombre indicado no es válido.");
 		this.nombrePersonaje = nombre;
 		atributos.add(new Atributo(Caracteristica.VELOCIDAD, 0));
 		atributos.add(new Atributo(Caracteristica.FUERZA, 0));
@@ -27,10 +41,11 @@ public abstract class Competidor {
 		atributos.add(new Atributo(Caracteristica.DESTREZA, 0));
 	}
 
+	// Al setearlo acá, se tiene que propagar por todos los métodos que lo invocan
 	public int competir(Competidor competidor, Caracteristica caracteristica) {
-		// if (this.getClass().equals(competidor.getClass())){
-		// 	throw new Error("leo gato");
-		// } EXCEPCIONES
+		if (this.getClass().equals(competidor.getClass())){
+			throw new MismoTipoCompetidorEx("No pueden competir personajes del mismo tipo.");
+		} 
 
 		int index = getIndex(caracteristica);
 		if (recorrerDesde(competidor, index) == 0){
@@ -73,21 +88,25 @@ public abstract class Competidor {
 	public String getNombreReal() {
 		return nombreReal;
 	}
-	public void setNombreReal(String nombreReal) {
+	private void setNombreReal(String nombreReal) {
+		if (nombreReal.isBlank() || nombreReal.isEmpty() || nombreReal == null)
+			throw new NombreInvalidoEx("El nombre real indicado no es válido.");
 		this.nombreReal = nombreReal;
 	}
+
 	public String getNombrePersonaje() {
 		return nombrePersonaje;
 	}
-	public void setNombrePersonaje(String nombrePersonaje) {
+
+	private void setNombrePersonaje(String nombrePersonaje) {
+		if (nombrePersonaje.isBlank() || nombrePersonaje.isEmpty() || nombrePersonaje == null)
+			throw new NombreInvalidoEx("El nombre de personaje indicado no es válido.");
 		this.nombrePersonaje = nombrePersonaje;
 	}
 	public List<Atributo> getAtributos() {
 		return atributos;
 	}
-	public void setAtributos(List<Atributo> atributos) {
-		this.atributos = atributos;
-	}
+
 	@Override
 	public String toString() {
 		return "Competidor [atributos=" + atributos + ", nombrePersonaje=" + nombrePersonaje + ", nombreReal="

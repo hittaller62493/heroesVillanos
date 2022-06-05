@@ -1,3 +1,4 @@
+package clases;
 public class Heroe extends Competidor {
 
 	public Heroe(String nombreReal, String nombrePersonaje, double velocidad, double fuerza, double resistencia,

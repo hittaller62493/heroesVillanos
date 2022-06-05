@@ -1,7 +1,14 @@
+package main;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+
+import excepciones.*;
+import clases.*;
+
+
 
 public class Juego {
 	// public void menu() {
@@ -104,6 +111,11 @@ public class Juego {
 
         // System.out.println(liga.competir(ligaVillanos, Caracteristica.DESTREZA));
         // System.out.println(liga.competir(ligaVillanos, Caracteristica.VELOCIDAD));
-        System.out.println(villano1.competir(ligaVillanos, Caracteristica.DESTREZA));
+        try {
+            System.out.println(villano1.competir(heroe1, Caracteristica.DESTREZA));
+        } catch (MismoTipoCompetidorEx e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 	}
 }

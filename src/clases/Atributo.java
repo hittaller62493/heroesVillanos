@@ -1,3 +1,7 @@
+package clases;
+
+import Caracteristica;
+
 public class Atributo implements Comparable<Atributo> {
 
     private Caracteristica caracteristica;
@@ -12,6 +16,7 @@ public class Atributo implements Comparable<Atributo> {
         return caracteristica;
     }
 
+    // Eliminar
     public void setCaracteristica(Caracteristica carac) {
         this.caracteristica = carac;
     }

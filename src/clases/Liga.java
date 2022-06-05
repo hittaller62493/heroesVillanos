@@ -1,5 +1,9 @@
+package clases;
 import java.util.ArrayList;
 import java.util.List;
+
+import Atributo;
+import Caracteristica;
 
 public class Liga extends Competidor {
 	private List<Atributo> atribsSinPromediar = new ArrayList<Atributo>();
