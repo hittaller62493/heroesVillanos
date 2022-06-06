@@ -1,4 +1,18 @@
-		Competidor heroe1 = new Heroe("HeroeReal", "Heroe", 200, 100, 180, 100);
+package main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import clases.Competidor;
+import clases.Heroe;
+import clases.Liga;
+import clases.Villano;
+import excepciones.TipoCompetidorInvalidoEx;
+
+public class Demo {
+    public static void main(String[] args) {
+        
+        Competidor heroe1 = new Heroe("HeroeReal", "Heroe", 200, 100, 180, 100);
 		Competidor heroe2 = new Heroe("HeroeReal", "Heroe", 200, 100, 280, 0);	
 		Competidor heroe3 = new Heroe("HeroeReal", "Heroe", 400, 100, 380, 10);
 		
@@ -10,14 +24,24 @@
 		liga.addPersonaje(heroe1);
 		liga.addPersonaje(heroe2);
 		liga.addPersonaje(heroe3);
-        ligaVillanos.addPersonaje(villano1);
-        ligaVillanos.addPersonaje(villano2);
-        ligaVillanos.addPersonaje(villano3);
+        // ligaVillanos.addPersonaje(villano1);
+        // ligaVillanos.addPersonaje(villano2);
+        // ligaVillanos.addPersonaje(villano3);
 
-        Liga ligaCompuesta = new Liga("ligaCompuestaDeHeroes");
+        // Liga ligaCompuesta = new Liga("ligaCompuestaDeHeroes");
 
-        ligaCompuesta.addPersonaje(ligaVillanos);
-        ligaCompuesta.addPersonaje(liga);
+        // ligaCompuesta.addPersonaje(ligaVillanos);
+        // ligaCompuesta.addPersonaje(liga);
+        System.out.println(liga.getAtributos());
+        liga.addPersonaje(liga);
+        System.out.println("---");
+        System.out.println(liga.getAtributos());
+        liga.addPersonaje(heroe1);
+        System.out.println("---");
+        System.out.println(liga.getAtributos());
+
+
+        
 
 
 		// System.out.println(heroe1.competir(villano1, Caracteristica.FUERZA));
@@ -53,22 +77,5 @@
         //     // TODO Auto-generated catch block
         //     e.printStackTrace();
         // }
-
-
-
-        ////// METODO VIEJO DE PROMEDIAR
-
-    // sumarTotal(competidor);
-	// promediar();
-    
-    // private void sumarTotal(Competidor competidor) {
-	// 	for (int i = 0; i < competidor.getAtributos().size(); i++) {
-	// 		atributosSinPromediar.get(i).incrementarPuntos(competidor.getAtributos().get(i).getPuntos());
-	// 	}
-	// }
-
-	// private void promediar() {
-	// 	for (int i = 0; i < atributosSinPromediar.size(); i++) {
-	// 		this.getAtributos().get(i).setPuntos(atributosSinPromediar.get(i).getPuntos() / competidores.size());
-	// 	}
-	// }
+    }
+}

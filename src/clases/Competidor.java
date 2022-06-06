@@ -12,7 +12,6 @@ public abstract class Competidor {
 	private String nombrePersonaje;
 	private List<Atributo> atributos = new ArrayList<Atributo>();
 
-
 	public Competidor(String nombreReal, String nombrePersonaje, double velocidad, double fuerza, double resistencia,
 			double destreza) {
 		setNombreReal(nombreReal);
@@ -22,6 +21,45 @@ public abstract class Competidor {
 
 	public boolean esHeroe() {
 		return this.getClass().equals(Heroe.class);
+	}
+
+	public Competidor(String nombre) {
+		setNombrePersonaje(nombre);
+		setAtributos(0, 0, 0, 0);
+	}
+
+	public int competir(Competidor competidor, Caracteristica caracteristica) {
+		if (this.esHeroe() == competidor.esHeroe()) {
+			throw new MismoTipoCompetidorEx("No pueden competir personajes del mismo tipo.");
+		}
+
+		int index = getIndex(caracteristica);
+		if (recorrerDesde(competidor, index) == 0) {
+			return recorrerDesde(competidor, 0);
+		}
+		return (recorrerDesde(competidor, index));
+	}
+
+	public boolean esGanador(Competidor competidor, Caracteristica caracteristica) {
+		return (competir(competidor, caracteristica) == 1);
+	}
+
+	public String getNombreReal() {
+		return nombreReal;
+	}
+
+	public String getNombrePersonaje() {
+		return nombrePersonaje;
+	}
+
+	public List<Atributo> getAtributos() {
+		return atributos;
+	}
+
+	@Override
+	public String toString() {
+		return "Competidor [atributos=" + atributos + ", nombrePersonaje=" + nombrePersonaje + ", nombreReal="
+				+ nombreReal + "]";
 	}
 
 	private void setAtributos(double velocidad, double fuerza, double resistencia, double destreza) {
@@ -37,34 +75,7 @@ public abstract class Competidor {
 			throw new CaracteristicaInvalidaEx("Uno o más atributos indicados no son válidos.");
 	}
 
-
-	public Competidor(String nombre) {
-		if (nombre.isBlank() || nombre.isEmpty() || nombre == null)
-			throw new NombreInvalidoEx("El nombre indicado no es válido.");
-		this.nombrePersonaje = nombre;
-		atributos.add(new Atributo(Caracteristica.VELOCIDAD, 0));
-		atributos.add(new Atributo(Caracteristica.FUERZA, 0));
-		atributos.add(new Atributo(Caracteristica.RESISTENCIA, 0));
-		atributos.add(new Atributo(Caracteristica.DESTREZA, 0));
-	}
-
-	public int competir(Competidor competidor, Caracteristica caracteristica) {
-		if (this.esHeroe() == competidor.esHeroe()){
-			throw new MismoTipoCompetidorEx("No pueden competir personajes del mismo tipo.");
-		} 
-
-		int index = getIndex(caracteristica);
-		if (recorrerDesde(competidor, index) == 0){
-			return recorrerDesde(competidor, 0);
-		}		
-		return (recorrerDesde(competidor, index));
-	}
-
-	public boolean esGanador(Competidor competidor, Caracteristica caracteristica) {
-		return (competir(competidor, caracteristica) == 1);		
-	}
-
-	private int getIndex(Caracteristica c){
+	private int getIndex(Caracteristica c) {
 		int index = 0;
 		ListIterator<Atributo> itrThis = atributos.listIterator();
 		while (itrThis.hasNext()) {
@@ -76,7 +87,7 @@ public abstract class Competidor {
 		return index;
 	}
 
-	private int recorrerDesde(Competidor competidor, int index){
+	private int recorrerDesde(Competidor competidor, int index) {
 		int contador = 0;
 		ListIterator<Atributo> itrThis = atributos.listIterator(index);
 		ListIterator<Atributo> itrOther = competidor.atributos.listIterator(index);
@@ -91,34 +102,17 @@ public abstract class Competidor {
 		}
 		return 0;
 	}
-	public String getNombreReal() {
-		return nombreReal;
+
+	private void setNombrePersonaje(String nombrePersonaje) {
+		if (nombrePersonaje.isBlank() || nombrePersonaje.isEmpty() || nombrePersonaje == null)
+			throw new NombreInvalidoEx("El nombre indicado no es válido.");
+		this.nombrePersonaje = nombrePersonaje;
 	}
+
 	private void setNombreReal(String nombreReal) {
 		if (nombreReal.isBlank() || nombreReal.isEmpty() || nombreReal == null)
 			throw new NombreInvalidoEx("El nombre real indicado no es válido.");
 		this.nombreReal = nombreReal;
-	}
-
-	public String getNombrePersonaje() {
-		return nombrePersonaje;
-	}
-
-	private void setNombrePersonaje(String nombrePersonaje) {
-		if (nombrePersonaje.isBlank() || nombrePersonaje.isEmpty() || nombrePersonaje == null)
-			throw new NombreInvalidoEx("El nombre de personaje indicado no es válido.");
-		this.nombrePersonaje = nombrePersonaje;
-	}
-	public List<Atributo> getAtributos() {
-		return atributos;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Competidor [atributos=" + atributos + ", nombrePersonaje=" + nombrePersonaje + ", nombreReal="
-				+ nombreReal + "]";
 	}
 
 }

@@ -53,3 +53,22 @@
         //     // TODO Auto-generated catch block
         //     e.printStackTrace();
         // }
+
+
+
+        ////// METODO VIEJO DE PROMEDIAR
+
+    // sumarTotal(competidor);
+	// promediar();
+    
+    // private void sumarTotal(Competidor competidor) {
+	// 	for (int i = 0; i < competidor.getAtributos().size(); i++) {
+	// 		atributosSinPromediar.get(i).incrementarPuntos(competidor.getAtributos().get(i).getPuntos());
+	// 	}
+	// }
+
+	// private void promediar() {
+	// 	for (int i = 0; i < atributosSinPromediar.size(); i++) {
+	// 		this.getAtributos().get(i).setPuntos(atributosSinPromediar.get(i).getPuntos() / competidores.size());
+	// 	}
+	// }
