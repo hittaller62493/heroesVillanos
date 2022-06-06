@@ -11,23 +11,30 @@ public abstract class Competidor {
 	private String nombreReal;
 	private String nombrePersonaje;
 	private List<Atributo> atributos = new ArrayList<Atributo>();
-	
+
 
 	public Competidor(String nombreReal, String nombrePersonaje, double velocidad, double fuerza, double resistencia,
 			double destreza) {
 		setNombreReal(nombreReal);
 		setNombrePersonaje(nombrePersonaje);
 		setAtributos(velocidad, fuerza, resistencia, destreza);
+	}
 
+	public boolean esHeroe() {
+		return this.getClass().equals(Heroe.class);
 	}
 
 	private void setAtributos(double velocidad, double fuerza, double resistencia, double destreza) {
-		if (velocidad < 0 || fuerza < 0 || resistencia < 0 || destreza < 0)
-			throw new CaracteristicaInvalidaEx("Uno o más atributos indicados no son válidos.");
+		validarCaracteristicas(velocidad, fuerza, resistencia, destreza);
 		atributos.add(new Atributo(Caracteristica.VELOCIDAD, velocidad));
 		atributos.add(new Atributo(Caracteristica.FUERZA, fuerza));
 		atributos.add(new Atributo(Caracteristica.RESISTENCIA, resistencia));
 		atributos.add(new Atributo(Caracteristica.DESTREZA, destreza));
+	}
+
+	private void validarCaracteristicas(double velocidad, double fuerza, double resistencia, double destreza) {
+		if (velocidad < 0 || fuerza < 0 || resistencia < 0 || destreza < 0)
+			throw new CaracteristicaInvalidaEx("Uno o más atributos indicados no son válidos.");
 	}
 
 
@@ -41,9 +48,8 @@ public abstract class Competidor {
 		atributos.add(new Atributo(Caracteristica.DESTREZA, 0));
 	}
 
-	// Al setearlo acá, se tiene que propagar por todos los métodos que lo invocan
 	public int competir(Competidor competidor, Caracteristica caracteristica) {
-		if (this.getClass().equals(competidor.getClass())){
+		if (this.esHeroe() == competidor.esHeroe()){
 			throw new MismoTipoCompetidorEx("No pueden competir personajes del mismo tipo.");
 		} 
 
@@ -106,6 +112,8 @@ public abstract class Competidor {
 	public List<Atributo> getAtributos() {
 		return atributos;
 	}
+
+
 
 	@Override
 	public String toString() {

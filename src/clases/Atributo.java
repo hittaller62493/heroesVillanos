@@ -1,7 +1,5 @@
 package clases;
 
-import Caracteristica;
-
 public class Atributo implements Comparable<Atributo> {
 
     private Caracteristica caracteristica;

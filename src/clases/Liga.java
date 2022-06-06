@@ -2,8 +2,7 @@ package clases;
 import java.util.ArrayList;
 import java.util.List;
 
-import Atributo;
-import Caracteristica;
+import excepciones.TipoCompetidorInvalidoEx;
 
 public class Liga extends Competidor {
 	private List<Atributo> atribsSinPromediar = new ArrayList<Atributo>();
@@ -17,9 +16,24 @@ public class Liga extends Competidor {
 		atribsSinPromediar.add(new Atributo(Caracteristica.DESTREZA, 0));
 	}
 
+
 	public void addPersonaje(Competidor competidor) {
-		competidores.add(competidor);
+
+		if (competidores.isEmpty()) 
+			competidores.add(competidor);
+		else 
+			if(esHeroe() == competidor.esHeroe())
+				competidores.add(competidor);
+			else
+				throw new TipoCompetidorInvalidoEx("Los competidores deben ser del mismo tipo en cada Liga.");
+
 		ajustarPromedio(competidor);
+
+	}
+
+	@Override
+	public boolean esHeroe() {
+		return this.competidores.get(0).esHeroe();
 	}
 
 	private void ajustarPromedio(Competidor competidor){
@@ -38,7 +52,6 @@ public class Liga extends Competidor {
 			this.getAtributos().get(i).setPuntos(atribsSinPromediar.get(i).getPuntos() / competidores.size());
 		}
 	}
-
 
 
 }
