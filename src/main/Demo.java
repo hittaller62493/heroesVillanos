@@ -16,6 +16,10 @@ public class Demo {
 		Competidor heroe2 = new Heroe("HeroeReal", "Heroe", 200, 100, 280, 0);	
 		Competidor heroe3 = new Heroe("HeroeReal", "Heroe", 400, 100, 380, 10);
 		
+        Competidor heroe4 = new Heroe("HeroeReal", "Heroe", 300, 100, 180, 1001);
+		Competidor heroe5 = new Heroe("HeroeReal", "Heroe", 300, 100, 280, 0);	
+		Competidor heroe6 = new Heroe("HeroeReal", "Heroe", 500, 100, 380, 101);
+		
         Competidor villano3 = new Villano("VillanoReal", "Villano", 100, 100, 280, 580 );
         Competidor villano1 = new Villano("VillanoReal", "Villano", 100, 50, 80, 80);
 		Competidor villano2 = new Villano("VillanoReal", "Villano", 100, 565, 80, 80);
@@ -24,6 +28,10 @@ public class Demo {
 		liga.addPersonaje(heroe1);
 		liga.addPersonaje(heroe2);
 		liga.addPersonaje(heroe3);
+		Liga liga2 = new Liga("liga2");
+		liga2.addPersonaje(heroe4);
+		liga2.addPersonaje(heroe5);
+		liga2.addPersonaje(heroe6);
         // ligaVillanos.addPersonaje(villano1);
         // ligaVillanos.addPersonaje(villano2);
         // ligaVillanos.addPersonaje(villano3);
@@ -32,13 +40,17 @@ public class Demo {
 
         // ligaCompuesta.addPersonaje(ligaVillanos);
         // ligaCompuesta.addPersonaje(liga);
-        System.out.println(liga.getAtributos());
+        System.out.println(liga.toString());
+        System.out.println("---");
+        System.out.println(liga2.toString());
+        System.out.println("-------");
+        liga.addPersonaje(liga2);
+        System.out.println(liga.toString());
         liga.addPersonaje(liga);
-        System.out.println("---");
-        System.out.println(liga.getAtributos());
-        liga.addPersonaje(heroe1);
-        System.out.println("---");
-        System.out.println(liga.getAtributos());
+        System.out.println(liga.toString());
+//        liga.addPersonaje(heroe1);
+//        System.out.println("---");
+//        System.out.println(liga.toString());
 
 
         

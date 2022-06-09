@@ -14,14 +14,16 @@ public class Liga extends Competidor {
 
 	public void addPersonaje(Competidor competidor) {
 
+		if (this.equals(competidor)) {
+			throw new TipoCompetidorInvalidoEx("No es posible añadir una liga a si misma");
+		}
+
 		if (competidores.isEmpty())
 			competidores.add(competidor);
 		else if (esHeroe() == competidor.esHeroe())
 			competidores.add(competidor);
 		else
 			throw new TipoCompetidorInvalidoEx("Los competidores deben ser del mismo tipo en cada Liga.");
-
-		ajustarPromedio(competidor);
 
 	}
 
@@ -30,13 +32,49 @@ public class Liga extends Competidor {
 		return this.competidores.get(0).esHeroe();
 	}
 
-	private void ajustarPromedio(Competidor competidor) {
-		for (int i = 0; i < this.getAtributos().size(); i++) {
-			double actual = this.getAtributos().get(i).getPuntos() * (competidores.size() - 1)
-					+ competidor.getAtributos().get(i).getPuntos();
-			this.getAtributos().get(i).setPuntos(actual / competidores.size());
+	@Override
+	public double getVelocidad() {
+		double contador = 0;
+		for (int i = 0; i < competidores.size(); i++) {
+			contador += competidores.get(i).getVelocidad();
+		}
+		return contador / competidores.size();
+	}
+
+	@Override
+	public double getFuerza() {
+		double contador = 0;
+		for (int i = 0; i < competidores.size(); i++) {
+			contador += competidores.get(i).getFuerza();
 		}
 
+		return contador / competidores.size();
+	}
+
+	@Override
+	public double getResistencia() {
+		double contador = 0;
+		for (int i = 0; i < competidores.size(); i++) {
+			contador += competidores.get(i).getResistencia();
+		}
+
+		return contador / competidores.size();
+	}
+
+	@Override
+	public double getDestreza() {
+		double contador = 0;
+		for (int i = 0; i < competidores.size(); i++) {
+			contador += competidores.get(i).getDestreza();
+		}
+
+		return contador / competidores.size();
+	}
+
+	@Override
+	public String toString() {
+		return "liga =" + getNombrePersonaje() + ", velocidad=" + getVelocidad() + ", fuerza=" + getFuerza()
+				+ ", resistencia=" + getResistencia() + ", destreza=" + getDestreza() + "]";
 	}
 
 }
