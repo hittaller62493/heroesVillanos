@@ -3,6 +3,7 @@ package clases;
 import java.util.ArrayList;
 import java.util.List;
 
+import excepciones.MismoTipoCompetidorEx;
 import excepciones.TipoCompetidorInvalidoEx;
 
 public class Liga extends Competidor {
@@ -15,7 +16,7 @@ public class Liga extends Competidor {
 	public void addPersonaje(Competidor competidor) {
 
 		if (this.equals(competidor)) {
-			throw new TipoCompetidorInvalidoEx("No es posible añadir una liga a si misma");
+			throw new MismoTipoCompetidorEx("No es posible aï¿½adir una liga a si misma");
 		}
 
 		if (competidores.isEmpty())

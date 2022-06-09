@@ -62,11 +62,11 @@ public abstract class Competidor {
 		contador = 0;
 	}
 
-	public static void incrementarContador() {
+	public void incrementarContador() {
 		contador++;
 	}
 
-	public static int getContador() {
+	public int getContador() {
 		return contador;
 	}
 
