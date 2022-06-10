@@ -1,6 +1,6 @@
 package clases;
 
-public class Atributo implements Comparable<Atributo> {
+public class Atributo {
 
     private Caracteristica caracteristica;
     private double puntaje;
@@ -29,11 +29,6 @@ public class Atributo implements Comparable<Atributo> {
 
     public void incrementarPuntos(double valor) {
         this.puntaje += valor;
-    }
-
-    @Override
-    public int compareTo(Atributo o) {
-        return Double.compare(this.getPuntos(), o.getPuntos());
     }
 
     @Override

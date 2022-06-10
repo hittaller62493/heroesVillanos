@@ -3,7 +3,7 @@ package clases;
 import excepciones.*;
 
 public abstract class Competidor {
-	private static int contador = 0;
+	private int contador = 0;
 	private String nombreReal;
 	private String nombrePersonaje;
 	private Atributo velocidad;
@@ -58,7 +58,7 @@ public abstract class Competidor {
 
 	}
 
-	public static void resetearContador() {
+	private void resetearContador() {
 		contador = 0;
 	}
 
@@ -74,28 +74,28 @@ public abstract class Competidor {
 		return velocidad.getPuntos();
 	}
 
-	public void incrementarVelocidad(double velocidad) {
-		this.velocidad.incrementarPuntos(velocidad);
-	}
-
 	public double getFuerza() {
 		return fuerza.getPuntos();
-	}
-
-	public void incrementarFuerza(double fuerza) {
-		this.fuerza.incrementarPuntos(fuerza);
 	}
 
 	public double getResistencia() {
 		return resistencia.getPuntos();
 	}
 
-	public void incrementarResistencia(double resistencia) {
-		this.resistencia.incrementarPuntos(resistencia);
-	}
-
 	public double getDestreza() {
 		return destreza.getPuntos();
+	}
+
+	public void incrementarVelocidad(double velocidad) {
+		this.velocidad.incrementarPuntos(velocidad);
+	}
+
+	public void incrementarFuerza(double fuerza) {
+		this.fuerza.incrementarPuntos(fuerza);
+	}
+
+	public void incrementarResistencia(double resistencia) {
+		this.resistencia.incrementarPuntos(resistencia);
 	}
 
 	public void incrementarDestreza(double destreza) {
@@ -145,32 +145,5 @@ public abstract class Competidor {
 		this.nombreReal = nombreReal;
 	}
 
-//	private int getIndex(Caracteristica c) {
-//	int index = 0;
-//	ListIterator<Atributo> itrThis = atributos.listIterator();
-//	while (itrThis.hasNext()) {
-//		Atributo aux = itrThis.next();
-//		if (aux.getCaracteristica().equals(c)) {
-//			index = atributos.indexOf(aux);
-//		}
-//	}
-//	return index;
-//}
-
-//private int recorrerDesde(Competidor competidor, int index) {
-//	int contador = 0;
-//	ListIterator<Atributo> itrThis = atributos.listIterator(index);
-//	ListIterator<Atributo> itrOther = competidor.atributos.listIterator(index);
-//	while (itrThis.hasNext() && contador != 4) {
-//		Atributo auxThis = itrThis.next();
-//		Atributo auxOther = itrOther.next();
-//		if (auxThis.compareTo(auxOther) == 0) {
-//			contador++;
-//		} else {
-//			return auxThis.compareTo(auxOther);
-//		}
-//	}
-//	return 0;
-//}
 
 }

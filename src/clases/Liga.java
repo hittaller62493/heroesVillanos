@@ -13,11 +13,8 @@ public class Liga extends Competidor {
 		super(nombre);
 	}
 
-	public void addPersonaje(Competidor competidor) {
-
-		if (this.equals(competidor)) {
-			throw new MismoTipoCompetidorEx("No es posible a�adir una liga a si misma");
-		}
+	public void addCompetidor(Competidor competidor) {
+		validarCompetidor(competidor);
 
 		if (competidores.isEmpty())
 			competidores.add(competidor);
@@ -27,6 +24,8 @@ public class Liga extends Competidor {
 			throw new TipoCompetidorInvalidoEx("Los competidores deben ser del mismo tipo en cada Liga.");
 
 	}
+
+	
 
 	@Override
 	public boolean esHeroe() {
@@ -76,6 +75,16 @@ public class Liga extends Competidor {
 	public String toString() {
 		return "liga =" + getNombrePersonaje() + ", velocidad=" + getVelocidad() + ", fuerza=" + getFuerza()
 				+ ", resistencia=" + getResistencia() + ", destreza=" + getDestreza() + "]";
+	}
+
+	private void validarCompetidor(Competidor competidor) {
+		if (this.equals(competidor)) {
+			throw new MismoTipoCompetidorEx("No es posible a�adir una liga a si misma");
+		}
+
+		if (competidores.contains(competidor)) {
+			throw new TipoCompetidorInvalidoEx("Este competidor ya se encuentra en la lista");
+		}
 	}
 
 }
