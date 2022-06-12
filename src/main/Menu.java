@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -76,6 +77,7 @@ public class Menu {
             throws IOException, LineaErroneaEx, NombreInvalidoEx, CaracteristicaInvalidaEx {
         Scanner entradaM1 = new Scanner(System.in);
         int opcionM1 = 0;
+        String rutaNuevoArchivo = "";
         do {
             try {
                 System.out.println("--Administracion de Personajes--");
@@ -97,7 +99,9 @@ public class Menu {
                         mostrarPersonajes();
                         break;
                     case 4:
-                        guardarPersonajes(); // TODO
+                        System.out.println("Escriba la ruta del nuevo archivo: ");
+                        rutaNuevoArchivo = entradaM1.next();
+                        guardarPersonajes(rutaNuevoArchivo);
                         break;
                     case 5:
                         break;
@@ -111,8 +115,8 @@ public class Menu {
         } while (opcionM1 != 5);
     }
 
-    private void guardarPersonajes() {
-        // TODO Auto-generated method stub
+    private void guardarPersonajes(String nuevoArchivo) throws IOException {
+        guardarCompetidores(nuevoArchivo);
 
     }
 
@@ -167,8 +171,110 @@ public class Menu {
     }
 
     private void crearLigaMenu() {
-        // TODO Auto-generated method stub
+        Scanner entradaCreacionLiga = new Scanner(System.in);
+        Liga liga = null;
+        String nombreLiga;
+        int opcionMenuLiga = 0;
+        try {
+            System.out.println();
+            System.out.println("-.Tipee correctamente los siguientes datos solicitados.-");
+            System.out.println("-.Los atributos deben ser numericos y positivos.-");
+            System.out.print("Nombre de Liga: ");
+            nombreLiga = entradaCreacionLiga.nextLine();
+            liga = new Liga(nombreLiga);
+            System.out.println("Seleccione tipo de Liga de Héroes o Villanos: ");
+            System.out.println("1. Liga de Héroes");
+            System.out.println("2. Liga de Villanos");
+            opcionMenuLiga = entradaCreacionLiga.nextInt();
+            switch (opcionMenuLiga) {
+                case 1:
+                    cargarHeroesALiga(liga);
+                    break;
+                case 2:
+                    cargarVillanosALiga(liga);
+                    break;
+                case 3:
+                    break;
 
+            }
+
+            System.out.println("-# Liga añadida correctamente #-");
+
+        } catch (InputMismatchException | NombreInvalidoEx | CaracteristicaInvalidaEx e) {
+            System.err.println("Datos ingresados incorrectos, vuelva a seleccionar una opción.");
+
+        }
+
+    }
+
+    private void cargarHeroesALiga(Liga liga) {
+        Scanner cargaHeroesALiga = new Scanner(System.in);
+        int seleccionHeroe;
+        boolean cargaLiga = true;
+        try {
+
+            do {
+                try {
+                    System.out.println(" -- Héroes disponibles para agregar a la Liga --");
+                    mostrarHeroes();
+                    System.out.println(" -- Seleccione un héroe con opción numérica o escriba -1 para salir --");
+                    seleccionHeroe = cargaHeroesALiga.nextInt();
+                    if (seleccionHeroe == -1) {
+                        cargaLiga = false;
+                    } else {
+                        liga.addCompetidor(buscarHeroe(seleccionHeroe));
+                        System.out.println("-- Competidor añadido correctamente --");
+                    }
+
+                } catch (TipoCompetidorInvalidoEx | MismoTipoCompetidorEx e) {
+                    System.err.println("Este competidor ya se encuentra en la liga.");
+                }
+            }
+
+            while (cargaLiga);
+
+            mapaLigasHeroes.put(indiceLigasHeroes, liga);
+            indiceLigasHeroes++;
+            conjuntoCompetidores.add(liga);
+
+        } catch (InputMismatchException e) {
+            System.err.println(e);
+        }
+    }
+
+    private void cargarVillanosALiga(Liga liga) {
+        Scanner cargaVillanosALiga = new Scanner(System.in);
+        int seleccionVillano;
+        boolean cargaLiga = true;
+        try {
+
+            do {
+                try {
+                    System.out.println(" -- Villanos disponibles para agregar a la Liga --");
+                    mostrarVillanos();
+                    System.out.println(" -- Seleccione un villano con opción numérica o escriba -1 para salir --");
+                    seleccionVillano = cargaVillanosALiga.nextInt();
+                    if (seleccionVillano == -1) {
+                        cargaLiga = false;
+                    } else {
+                        liga.addCompetidor(buscarVillano(seleccionVillano));
+                        System.out.println("-- Competidor añadido correctamente --");
+                    }
+
+                } catch (TipoCompetidorInvalidoEx | MismoTipoCompetidorEx e) {
+                    System.err.println("Este competidor ya se encuentra en la liga.");
+                }
+            }
+
+            while (cargaLiga);
+
+            mapaLigasVillanos.put(indiceLigasVillanos, liga);
+            indiceLigasVillanos++;
+            conjuntoCompetidores.add(liga);
+
+        } catch (InputMismatchException e) {
+            System.err.println(e);
+        }
     }
 
     private void mostrarPersonajes() {
@@ -366,15 +472,17 @@ public class Menu {
         opcionMVO = entradaMenuCompetidoresOrdenados.nextInt();
         switch (opcionMVO) {
             case 1:
-            System.out.println( "-- LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", " + caracteristicaDos + " --");
-              ordenarPorCaracteristicasDescendente(caracteristicaUno, caracteristicaDos);
+                System.out.println("-- LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", "
+                        + caracteristicaDos + " --");
+                ordenarPorCaracteristicasDescendente(caracteristicaUno, caracteristicaDos);
                 break;
-            
+
             case 2:
-            System.out.println( "-- LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", " + caracteristicaDos + " --");
-            ordenarPorCaracteristicasAscendente(caracteristicaUno, caracteristicaDos);
-              break;
-            }
+                System.out.println("-- LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", "
+                        + caracteristicaDos + " --");
+                ordenarPorCaracteristicasAscendente(caracteristicaUno, caracteristicaDos);
+                break;
+        }
 
     }
 
@@ -723,20 +831,22 @@ public class Menu {
     }
 
     private void mostrarLigasHeroes() {
+        System.out.println("-- Mostrando Ligas de Héroes -- ");
         for (Entry<Integer, Competidor> competidor : mapaLigasHeroes.entrySet()) {
-            System.out.println(competidor.getKey() + " -> " + competidor.getValue().getNombrePersonaje());
+            System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
         }
     }
 
     private void mostrarVillanos() {
         for (Entry<Integer, Competidor> competidor : mapaVillanos.entrySet()) {
-            System.out.println(competidor.getKey() + " -> " + competidor.getValue().getNombrePersonaje());
+            System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
         }
     }
 
     private void mostrarLigasVillanos() {
+        System.out.println("-- Mostrando Ligas de Villanos -- ");
         for (Entry<Integer, Competidor> competidor : mapaLigasVillanos.entrySet()) {
-            System.out.println(competidor.getKey() + " -> " + competidor.getValue().getNombrePersonaje());
+            System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
         }
     }
 
@@ -894,22 +1004,22 @@ public class Menu {
         if (lineaLeida[3].isEmpty() || lineaLeida[3].isBlank()) {
             throw new LineaErroneaEx("Competidor no cargado: nombre no encontrada.");
         }
-        int v = Integer.parseInt(lineaLeida[3].trim());
+        double v = Double.parseDouble(lineaLeida[3].trim());
 
         if (lineaLeida[4].isEmpty() || lineaLeida[4].isBlank()) {
             throw new LineaErroneaEx("Competidor no cargado: fuerza no encontrada.");
         }
-        int f = Integer.parseInt(lineaLeida[4].trim());
+        double f = Double.parseDouble(lineaLeida[4].trim());
 
         if (lineaLeida[5].isEmpty() || lineaLeida[5].isBlank()) {
             throw new LineaErroneaEx("Competidor no cargado: resistencia no encontrada.");
         }
-        int r = Integer.parseInt(lineaLeida[5].trim());
+        double r = Double.parseDouble(lineaLeida[5].trim());
 
         if (lineaLeida[6].isEmpty() || lineaLeida[6].isBlank()) {
             throw new LineaErroneaEx("Competidor no cargado: destreza no encontrada.");
         }
-        int d = Integer.parseInt(lineaLeida[6].trim());
+        double d = Double.parseDouble(lineaLeida[6].trim());
 
         if (lineaLeida[0].toLowerCase().equals("héroe") || lineaLeida[0].toLowerCase().equals("heroe"))
             competidor = cargarHeroeEnMapa(nombreR, nombreP, v, f, r, d);
@@ -957,6 +1067,53 @@ public class Menu {
         conjuntoCompetidores.add(liga);
 
         return liga;
+    }
+
+    /**
+     * Guarda la agenda completa en disco, en el archivo especificado como parámetro
+     * Con el siguiente formato. Una línea por competidor
+     * 
+     * @param pArchivo nombre del archivo (path absoluto o relativo
+     *                 a la carpeta src del proyecto
+     */
+    public void guardarCompetidores(String pArchivo) throws IOException {
+        FileWriter guardador = null;
+        try {
+            guardador = new FileWriter(pArchivo);
+            for (Map.Entry<Integer, Competidor> competidor : mapaHeroes.entrySet()) {
+                System.out.println("GUARDANDO Competidor: " + competidor.getValue().getNombrePersonaje());
+                guardador.write(serializarCompetidor(competidor.getValue()));
+            }
+            for (Map.Entry<Integer, Competidor> competidor : mapaVillanos.entrySet()) {
+                System.out.println("GUARDANDO Competidor: " + competidor.getValue().getNombrePersonaje());
+                guardador.write(serializarCompetidor(competidor.getValue()));
+            }
+
+            guardador.close();
+            System.out.println(
+                    "----------------------------------\n Los competidores se guardaron CORRECTAMENTE en el archivo "
+                            + pArchivo + "\n----------------------------------\n");
+        } catch (FileNotFoundException e) {
+            System.err.println("La ruta especificada o el archivo no existen.");
+        } catch (IOException e) {
+            System.err.println("Ocurri� un error intentando guardar el archivo archivo");
+        } finally {
+            guardador.close();
+        }
+
+    }
+
+    /**
+     * @post: Serializa los datos de la persona que se ingresa.
+     * @return
+     */
+    public String serializarCompetidor(Competidor c) {
+
+        return c.getClass().getName().replace("clases.", "") + ", " + c.getNombreReal() + ", " + c.getNombrePersonaje()
+                + ", "
+                + c.getVelocidad() + ", "
+                + c.getFuerza() + ", "
+                + c.getResistencia() + ", " + c.getDestreza() + "\n";
     }
 
     public static void main(String[] args) {
