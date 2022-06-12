@@ -22,9 +22,9 @@ import excepciones.*;
 public class Menu {
 
     Map<Integer, Competidor> mapaHeroes = new HashMap<Integer, Competidor>();
-    Map<Integer, Competidor> mapaLigasHeroes = new HashMap<Integer, Competidor>();
+    Map<Integer, Liga> mapaLigasHeroes = new HashMap<Integer, Liga>();
     Map<Integer, Competidor> mapaVillanos = new HashMap<Integer, Competidor>();
-    Map<Integer, Competidor> mapaLigasVillanos = new HashMap<Integer, Competidor>();
+    Map<Integer, Liga> mapaLigasVillanos = new HashMap<Integer, Liga>();
     int indiceHeroes, indiceVillanos, indiceLigasHeroes, indiceLigasVillanos;
 
     Set<Competidor> conjuntoCompetidores = new HashSet<>();
@@ -124,6 +124,7 @@ public class Menu {
             TipoCompetidorInvalidoEx, MismoTipoCompetidorEx {
         Scanner entradaM2 = new Scanner(System.in);
         int opcionM2 = 0;
+        String rutaNuevoArchivo = "";
         do {
             try {
                 System.out.println("--Administracion de Liga--");
@@ -145,7 +146,9 @@ public class Menu {
                         mostrarLigas();
                         break;
                     case 4:
-                        guardarLigas();
+                        System.out.println("Escriba la ruta del nuevo archivo: ");
+                        rutaNuevoArchivo = entradaM2.next();
+                        guardarLigas(rutaNuevoArchivo);
                         break;
                     case 5:
                         break;
@@ -159,8 +162,49 @@ public class Menu {
         } while (opcionM2 != 5);
     }
 
-    private void guardarLigas() {
-        // TODO Auto-generated method stub
+    private void guardarLigas(String rutaNuevoArchivo) throws IOException {
+        guardarLigasCompetidores(rutaNuevoArchivo);
+
+    }
+
+    private void guardarLigasCompetidores(String pArchivo) throws IOException {
+        FileWriter guardador = null;
+        try {
+            guardador = new FileWriter(pArchivo);
+            for (Map.Entry<Integer, Liga> liga : mapaLigasHeroes.entrySet()) {
+                System.out.println("GUARDANDO Liga: " + liga.getValue().getNombrePersonaje());
+                guardador.write(serializarLiga(liga.getValue()));
+            }
+            for (Map.Entry<Integer, Liga> liga : mapaLigasVillanos.entrySet()) {
+                System.out.println("GUARDANDO Liga: " + liga.getValue().getNombrePersonaje());
+                guardador.write(serializarLiga((Liga) liga.getValue()));
+            }
+
+            guardador.close();
+            System.out.println(
+                    "----------------------------------\n Los competidores se guardaron CORRECTAMENTE en el archivo "
+                            + pArchivo + "\n----------------------------------\n");
+        } catch (FileNotFoundException e) {
+            System.err.println("La ruta especificada o el archivo no existen.");
+        } catch (IOException e) {
+            System.err.println("Ocurri� un error intentando guardar el archivo archivo");
+        } finally {
+            guardador.close();
+        }
+
+    }
+
+    /**
+     * @post: Serializa los datos de la persona que se ingresa.
+     * @return
+     */
+    public String serializarLiga(Liga c) {
+        String personajes = "";
+        for (Competidor competidor : c.getCompetidores()) {
+            personajes = personajes + ", " + competidor.getNombrePersonaje();
+        }
+
+        return c.getNombrePersonaje() + personajes + "\n";
 
     }
 
@@ -832,7 +876,7 @@ public class Menu {
 
     private void mostrarLigasHeroes() {
         System.out.println("-- Mostrando Ligas de Héroes -- ");
-        for (Entry<Integer, Competidor> competidor : mapaLigasHeroes.entrySet()) {
+        for (Entry<Integer, Liga> competidor : mapaLigasHeroes.entrySet()) {
             System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
         }
     }
@@ -845,7 +889,7 @@ public class Menu {
 
     private void mostrarLigasVillanos() {
         System.out.println("-- Mostrando Ligas de Villanos -- ");
-        for (Entry<Integer, Competidor> competidor : mapaLigasVillanos.entrySet()) {
+        for (Entry<Integer, Liga> competidor : mapaLigasVillanos.entrySet()) {
             System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
         }
     }

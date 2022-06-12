@@ -1,8 +1,8 @@
 # Pruebas Unitarias
 # Menú
-    - Guardado en archivo Ligas
-    - Validaciones input por teclado algo que no corresponde
-    - Validaciones de CARGAR Ligas sí y sólo si hay personajes creados
+    - Guardado en archivo /Ligas y Personajes
+    - Carga de Ligas x consola
+    - Validaciones imput por teclado algo que no corresponde
 # Documentar
 # Informe
 # UML

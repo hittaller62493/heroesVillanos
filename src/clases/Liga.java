@@ -11,6 +11,10 @@ import excepciones.TipoCompetidorInvalidoEx;
 public class Liga extends Competidor {
 	private List<Competidor> competidores = new ArrayList<Competidor>();
 
+	public List<Competidor> getCompetidores() {
+		return competidores;
+	}
+
 	public Liga(String nombre) throws NombreInvalidoEx, CaracteristicaInvalidaEx {
 		super(nombre);
 	}
