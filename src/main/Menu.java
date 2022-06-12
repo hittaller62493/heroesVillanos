@@ -39,6 +39,7 @@ public class Menu {
                 System.out.println("2. Administracion de Ligas.");
                 System.out.println("3. Realizacion de combates.");
                 System.out.println("4. Reportes.");
+                System.out.println("5. Salir del juego.");
                 System.out.print("Opcion: ");
                 opcion = entrada.nextInt();
                 switch (opcion) {
@@ -52,6 +53,7 @@ public class Menu {
                         menuCombates();
                         break;
                     case 4:
+                        menuReportes();
                         break;
                     case 5:
                         System.exit(0);
@@ -80,7 +82,7 @@ public class Menu {
                 System.out.println("2. Creacion de personaje");
                 System.out.println("3. Listado de personajes");
                 System.out.println("4. Guardar personajes en un archivo");
-                System.out.println("5. Volver a menú principal");
+                System.out.println("5. <== Volver a menú anterior");
                 System.out.print("Opcion: ");
                 opcionM1 = entradaM1.nextInt();
                 switch (opcionM1) {
@@ -94,7 +96,7 @@ public class Menu {
                         mostrarPersonajes();
                         break;
                     case 4:
-                        guardarPersonajes();
+                        guardarPersonajes(); // TODO
                         break;
                     case 5:
                         break;
@@ -124,7 +126,7 @@ public class Menu {
                 System.out.println("2. Creacion de liga");
                 System.out.println("3. Listado de ligas");
                 System.out.println("4. Guardar ligas en un archivo");
-                System.out.println("5. Volver a menú principal");
+                System.out.println("5. <== Volver a menú anterior");
                 System.out.print("Opcion: ");
                 opcionM2 = entradaM2.nextInt();
                 switch (opcionM2) {
@@ -169,7 +171,8 @@ public class Menu {
     }
 
     private void mostrarPersonajes() {
-
+        mostrarHeroes();
+        mostrarVillanos();
     }
 
     private void menuCombates() throws MismoTipoCompetidorEx, LineaErroneaEx {
@@ -180,6 +183,7 @@ public class Menu {
             System.out.println("1. Personaje vs Personaje");
             System.out.println("2. Personaje vs Liga");
             System.out.println("3. Liga vs Liga");
+            System.out.println("4. <== Volver a menú anterior");
             System.out.print("Opcion:");
 
             opcionCombate = scannerCombate.nextInt();
@@ -193,9 +197,11 @@ public class Menu {
                 case 3:
                     competirLvL();
                     break;
+                case 4:
+                    break;
             }
 
-        } while (opcionCombate != 3);
+        } while (opcionCombate != 4);
     }
 
     private void menuLigaVCompetidor() throws MismoTipoCompetidorEx, LineaErroneaEx {
@@ -205,6 +211,7 @@ public class Menu {
             System.out.println("-- Menu Liga vs Competidor --");
             System.out.println("1. Liga Heroe vs Liga Villano");
             System.out.println("2. Heroe vs Liga Villano");
+            System.out.println("3. <== Volver a menú anterior");
             opcionML = entradaMenuLiga.nextInt();
             switch (opcionML) {
                 case 1:
@@ -212,6 +219,8 @@ public class Menu {
                     break;
                 case 2:
                     competirHvLV();
+                    break;
+                case 3:
                     break;
             }
 
@@ -226,7 +235,7 @@ public class Menu {
         double velo, fuerza, resistencia, destreza;
         try {
             System.out.println();
-            System.out.println("-.Digite correctamente los siguientes datos solicitados.-");
+            System.out.println("-.Tipee correctamente los siguientes datos solicitados.-");
             System.out.println("-.Los atributos deben ser numericos y positivos.-");
             System.out.print("Héroe o Villano: ");
             tipoCompetidor = entradaCreacionPj.nextLine();
@@ -256,16 +265,157 @@ public class Menu {
 
     }
 
+    private void menuReportes() throws LineaErroneaEx, MismoTipoCompetidorEx {
+        Scanner entradaMenuReportes = new Scanner(System.in);
+        int opcionR = 0;
+        do {
+            System.out.println("-- Menu de Reportes --");
+            System.out.println("1. Vencedores a un Personaje ");
+            System.out.println("2. Listado ordenado de competidores por caracteristicas");
+            System.out.println("3. <== Volver al menu anterior");
+
+            opcionR = entradaMenuReportes.nextInt();
+            switch (opcionR) {
+                case 1:
+                    menuDeVencedores();
+                    break;
+                case 2:
+                    menuDeCompetidoresOrdenados();
+                    break;
+                case 3:
+                    break;
+            }
+
+        } while (opcionR != 3);
+
+    }
+
+    private void menuDeCompetidoresOrdenados() {
+    }
+
+    private void menuDeVencedores() throws LineaErroneaEx {
+        Scanner entradaMenuVencedores = new Scanner(System.in);
+        String tipoCompetidor;
+        Competidor competidorAVencer = null;
+        String caracteristica;
+        Caracteristica carac;
+        int opcionML = 0;
+
+        System.out.println("-- Seleccione tipo del competidor a vencer --");
+        System.out.println("1: Liga");
+        System.out.println("2: Competidor");
+        opcionML = entradaMenuVencedores.nextInt();
+        switch (opcionML) {
+            case 1:
+                competidorAVencer = seleccionLiga(entradaMenuVencedores);
+                System.out.println("-- Liga seleccionada con exito --");
+                System.out.println("-- Seleccione la caracteristica para empezar a combatir --");
+                caracteristica = entradaMenuVencedores.next();
+                carac = buscarCaracteristica(caracteristica);
+                System.out.println("-- La caracteristica seleccionada es: " + carac + " --"); {
+                vencedoresA(competidorAVencer, carac);
+
+            }
+
+                break;
+            case 2:
+                competidorAVencer = seleccionCompetidor(entradaMenuVencedores);
+                System.out.println("-- Competidor seleccionado con exito --");
+                System.out.println("-- Seleccione la caracteristica para empezar a combatir --");
+                caracteristica = entradaMenuVencedores.next();
+                carac = buscarCaracteristica(caracteristica);
+                System.out.println("-- La caracteristica seleccionada es: " + carac + " --");
+                vencedoresA(competidorAVencer, carac);
+                break;
+            case 3:
+                break;
+        }
+
+    }
+
+    private void vencedoresA(Competidor competidorAVencer, Caracteristica carac) {
+        for (Competidor competidor : conjuntoCompetidores) {
+            try {
+                if (competidor.esGanador(competidorAVencer, carac)) {
+                    System.out.println("- " + competidor.getNombrePersonaje());
+                }
+            } catch (MismoTipoCompetidorEx e) {
+            }
+        }
+    }
+
+    private Competidor seleccionCompetidor(Scanner entradaMenuVencedores) {
+        Competidor competidorAVencer = null;
+        int subComp = 0;
+
+        System.out.println("Seleccione tipo de competidor --");
+        System.out.println("1: Heroe");
+        System.out.println("2: Villano");
+        subComp = entradaMenuVencedores.nextInt();
+        switch (subComp) {
+            case 1:
+                mostrarHeroes();
+                System.out.println("-- Seleccione Heroe a vencer --");
+                subComp = entradaMenuVencedores.nextInt();
+                competidorAVencer = buscarHeroe(subComp);
+                break;
+            case 2:
+                mostrarVillanos();
+                System.out.println("-- Seleccione Villano a vencer --");
+                subComp = entradaMenuVencedores.nextInt();
+                competidorAVencer = buscarVillano(subComp);
+                break;
+            case 3:
+                break;
+        }
+        return competidorAVencer;
+
+    }
+
+    private Competidor seleccionLiga(Scanner entradaMenuVencedores) {
+        Competidor competidorAVencer = null;
+        int subLiga = 0;
+
+        System.out.println("Seleccione tipo de liga --");
+        System.out.println("1: Liga de Heroes");
+        System.out.println("2: Liga de Villanos");
+        subLiga = entradaMenuVencedores.nextInt();
+        switch (subLiga) {
+            case 1:
+                mostrarLigasHeroes();
+                System.out.println("-- Seleccione liga a vencer -- ");
+                subLiga = entradaMenuVencedores.nextInt();
+                competidorAVencer = buscarLigaHeroe(subLiga);
+                break;
+            case 2:
+                mostrarLigasVillanos();
+                System.out.println("-- Seleccione liga a vencer -- ");
+                subLiga = entradaMenuVencedores.nextInt();
+                competidorAVencer = buscarLigaVillano(subLiga);
+                break;
+        }
+        return competidorAVencer;
+    }
+
     private Competidor crearCompetidorCargarEnMapa(Competidor competidor, String nombreR, String nombreP,
             String tipoCompetidor, double v, double f, double r, double d)
             throws LineaErroneaEx, NombreInvalidoEx, CaracteristicaInvalidaEx {
-        if (tipoCompetidor.toLowerCase().trim().equals("héroe") || tipoCompetidor.toLowerCase().trim().equals("heroe"))
+        if (competidorEsHeroe(tipoCompetidor))
             competidor = cargarHeroeEnMapa(nombreR, nombreP, v, f, r, d);
-        else if (tipoCompetidor.toLowerCase().trim().equals("villano"))
+        else if (competidorEsVillano(tipoCompetidor))
             competidor = cargarVillanoEnMapa(nombreR, nombreP, v, f, r, d);
         else
             throw new LineaErroneaEx("El tipo debe ser Héroe o Villano");
         return competidor;
+    }
+
+    private boolean competidorEsVillano(String tipoCompetidor) {
+        return tipoCompetidor.toLowerCase().trim().equals("villano");
+    }
+
+    private boolean competidorEsHeroe(String tipoCompetidor) {
+        return tipoCompetidor.toLowerCase().trim().equals("héroe")
+                || tipoCompetidor.toLowerCase().trim().equals("heroe");
     }
 
     private Competidor cargarVillanoEnMapa(String nombreR, String nombreP, double v, double f, double r, double d)
@@ -391,7 +541,7 @@ public class Menu {
             System.out.println("Hubo empate entre " + mapaHeroes.get(nHeroe).getNombrePersonaje() + "y"
                     + mapaVillanos.get(nVillano).getNombrePersonaje());
         if (resultado == 1)
-            System.out.println("Ganó Independiente: " + mapaHeroes.get(nHeroe).getNombrePersonaje());
+            System.out.println("Ganó  " + mapaHeroes.get(nHeroe).getNombrePersonaje());
     }
 
     private void combatirLHvV(int nLigaHeroe, int nVillano, Caracteristica nCaracteristica)
