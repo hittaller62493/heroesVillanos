@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
@@ -291,11 +292,130 @@ public class Menu {
     }
 
     private void menuDeCompetidoresOrdenados() {
+        Scanner entradaMenuCompetidoresOrdenados = new Scanner(System.in);
+        // String tipoCompetidor;
+        // Competidor competidorAVencer = null;
+        // String caracteristica;
+        Caracteristica caracteristicaUno = null;
+        Caracteristica caracteristicaDos = null;
+        int opcionMVO = 0;
+
+        System.out.println("-- Seleccione la PRIMER caracteristica para ordenar --");
+        System.out.println("1: Velocidad");
+        System.out.println("2: Fuerza");
+        System.out.println("3: Resistencia");
+        System.out.println("4: Destreza");
+        opcionMVO = entradaMenuCompetidoresOrdenados.nextInt();
+        switch (opcionMVO) {
+            case 1:
+                caracteristicaUno = Caracteristica.VELOCIDAD;
+                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaUno + " --"); {
+                break;
+            }
+            case 2:
+                caracteristicaUno = Caracteristica.FUERZA;
+                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaUno + " --"); {
+                break;
+            }
+            case 3:
+                caracteristicaUno = Caracteristica.RESISTENCIA;
+                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaUno + " --"); {
+                break;
+            }
+            case 4:
+                caracteristicaUno = Caracteristica.DESTREZA;
+                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaUno + " --"); {
+                break;
+            }
+            case 5:
+                break;
+        }
+        System.out.println("-- Seleccione la SEGUNDA caracteristica para ordenar --");
+        System.out.println("1: Velocidad");
+        System.out.println("2: Fuerza");
+        System.out.println("3: Resistencia");
+        System.out.println("4: Destreza");
+        opcionMVO = entradaMenuCompetidoresOrdenados.nextInt();
+        switch (opcionMVO) {
+            case 1:
+                caracteristicaDos = Caracteristica.VELOCIDAD;
+                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaDos + " --"); {
+                break;
+            }
+            case 2:
+                caracteristicaDos = Caracteristica.FUERZA;
+                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaDos + " --"); {
+                break;
+            }
+            case 3:
+                caracteristicaDos = Caracteristica.RESISTENCIA;
+                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaDos + " --"); {
+                break;
+            }
+            case 4:
+                caracteristicaDos = Caracteristica.DESTREZA;
+                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaDos + " --"); {
+                break;
+            }
+            case 5:
+                break;
+        }
+        System.out.println("-- Seleccione orden Ascendente o Descendente --");
+        System.out.println("1. Mayor a menor");
+        System.out.println("2. Menor a mayor");
+        opcionMVO = entradaMenuCompetidoresOrdenados.nextInt();
+        switch (opcionMVO) {
+            case 1:
+            System.out.println( "-- LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", " + caracteristicaDos + " --");
+              ordenarPorCaracteristicasDescendente(caracteristicaUno, caracteristicaDos);
+                break;
+            
+            case 2:
+            System.out.println( "-- LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", " + caracteristicaDos + " --");
+            ordenarPorCaracteristicasAscendente(caracteristicaUno, caracteristicaDos);
+              break;
+            }
+
+    }
+
+    private void ordenarPorCaracteristicasAscendente(Caracteristica caracteristicaUno,
+            Caracteristica caracteristicaDos) {
+
+        PriorityQueue<Competidor> cola = new PriorityQueue<Competidor>(
+                new OrdenadorCaracteristicaAscendente(caracteristicaUno, caracteristicaDos));
+        for (Competidor competidor : conjuntoCompetidores) {
+            cola.add(competidor);
+        }
+
+        while (!cola.isEmpty()) {
+            Competidor aux = cola.poll();
+            double c1 = aux.getCaracteristica(caracteristicaUno);
+            double c2 = aux.getCaracteristica(caracteristicaDos);
+            System.out.println("- " + aux.getNombrePersonaje() + ", " + caracteristicaUno + ": " + c1 + ", "
+                    + caracteristicaDos + ": " + c2);
+        }
+    }
+
+    private void ordenarPorCaracteristicasDescendente(Caracteristica caracteristicaUno,
+            Caracteristica caracteristicaDos) {
+
+        PriorityQueue<Competidor> cola = new PriorityQueue<Competidor>(
+                new OrdenadorCaracteristicaDescendente(caracteristicaUno, caracteristicaDos));
+        for (Competidor competidor : conjuntoCompetidores) {
+            cola.add(competidor);
+        }
+
+        while (!cola.isEmpty()) {
+            Competidor aux = cola.poll();
+            double c1 = aux.getCaracteristica(caracteristicaUno);
+            double c2 = aux.getCaracteristica(caracteristicaDos);
+            System.out.println("- " + aux.getNombrePersonaje() + ", " + caracteristicaUno + ": " + c1 + ", "
+                    + caracteristicaDos + ": " + c2);
+        }
     }
 
     private void menuDeVencedores() throws LineaErroneaEx {
         Scanner entradaMenuVencedores = new Scanner(System.in);
-        String tipoCompetidor;
         Competidor competidorAVencer = null;
         String caracteristica;
         Caracteristica carac;

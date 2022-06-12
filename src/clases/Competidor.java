@@ -114,6 +114,24 @@ public abstract class Competidor {
 		return nombrePersonaje;
 	}
 
+	public double getCaracteristica (Caracteristica c){
+		
+		if (c.equals(Caracteristica.VELOCIDAD)) {
+			return getVelocidad();
+		}
+		if (c.equals(Caracteristica.FUERZA)) {
+			return getFuerza();
+		}
+		if (c.equals(Caracteristica.RESISTENCIA)) {
+			return getResistencia();
+		}
+		if (c.equals(Caracteristica.DESTREZA)) {
+			return getDestreza();
+		}
+
+		return -2;
+	}
+
 	@Override
 	public String toString() {
 		return "Competidor [nombreReal=" + nombreReal + ", nombrePersonaje=" + nombrePersonaje + ", velocidad="
