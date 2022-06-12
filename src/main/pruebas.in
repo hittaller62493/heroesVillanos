@@ -72,3 +72,36 @@
 	// 		this.getAtributos().get(i).setPuntos(atributosSinPromediar.get(i).getPuntos() / competidores.size());
 	// 	}
 	// }
+
+
+        // private Competidor buscarVillano(String villanoBuscado) {
+    // for (Competidor competidor : conjuntoCompetidores) {
+    // if(!competidor.esHeroe() &&
+    // competidor.getNombrePersonaje().equals(villanoBuscado) )
+    // return competidor;
+    // }
+    // return null;
+    // }
+
+    // private Competidor buscarHeroe(String heroeBuscado) {
+    // for (Competidor competidor : conjuntoCompetidores) {
+    // if(competidor.esHeroe() &&
+    // competidor.getNombrePersonaje().equals(heroeBuscado) )
+    // return competidor;
+    // }
+    // return null;
+    // }
+
+        // private void mostrarHeroes(){
+    // for (Competidor competidor : conjuntoCompetidores) {
+    // if(competidor.esHeroe())
+    // System.out.println(competidor.getNombrePersonaje());
+    // }
+    // }
+
+    // private void mostrarVillano(){
+    // for (Competidor competidor : conjuntoCompetidores) {
+    // if(!competidor.esHeroe())
+    // System.out.println(competidor.getNombrePersonaje());
+    // }
+    // }
