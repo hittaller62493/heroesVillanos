@@ -1,7 +1,7 @@
 package excepciones;
 
-public class LineaErroneaEx extends RuntimeException {
-    
+public class LineaErroneaEx extends Exception {
+
     public LineaErroneaEx(String e) {
         super(e);
     }

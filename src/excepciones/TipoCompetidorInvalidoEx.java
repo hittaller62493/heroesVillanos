@@ -1,6 +1,6 @@
 package excepciones;
 
-public class TipoCompetidorInvalidoEx extends RuntimeException{
+public class TipoCompetidorInvalidoEx extends Exception {
     public TipoCompetidorInvalidoEx(String e) {
         super(e);
     }

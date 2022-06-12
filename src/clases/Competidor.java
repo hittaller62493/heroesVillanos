@@ -12,13 +12,13 @@ public abstract class Competidor {
 	private Atributo destreza;
 
 	public Competidor(String nombreReal, String nombrePersonaje, double velocidad, double fuerza, double resistencia,
-			double destreza) {
+			double destreza) throws NombreInvalidoEx, CaracteristicaInvalidaEx {
 		setNombreReal(nombreReal);
 		setNombrePersonaje(nombrePersonaje);
 		setAtributos(velocidad, fuerza, resistencia, destreza);
 	}
 
-	public Competidor(String nombre) {
+	public Competidor(String nombre) throws NombreInvalidoEx, CaracteristicaInvalidaEx {
 		setNombrePersonaje(nombre);
 		setAtributos(0, 0, 0, 0);
 	}
@@ -27,7 +27,7 @@ public abstract class Competidor {
 		return this.getClass().equals(Heroe.class);
 	}
 
-	public int competir(Competidor competidor, Caracteristica caracteristica) {
+	public int competir(Competidor competidor, Caracteristica caracteristica) throws MismoTipoCompetidorEx {
 
 		if (this.esHeroe() == competidor.esHeroe()) {
 			throw new MismoTipoCompetidorEx("No pueden competir personajes del mismo tipo.");
@@ -102,7 +102,7 @@ public abstract class Competidor {
 		this.destreza.incrementarPuntos(destreza);
 	}
 
-	public boolean esGanador(Competidor competidor, Caracteristica caracteristica) {
+	public boolean esGanador(Competidor competidor, Caracteristica caracteristica) throws MismoTipoCompetidorEx {
 		return (competir(competidor, caracteristica) == 1);
 	}
 
@@ -120,7 +120,8 @@ public abstract class Competidor {
 				+ velocidad + ", fuerza=" + fuerza + ", resistencia=" + resistencia + ", destreza=" + destreza + "]";
 	}
 
-	private void setAtributos(double velocidad, double fuerza, double resistencia, double destreza) {
+	private void setAtributos(double velocidad, double fuerza, double resistencia, double destreza)
+			throws CaracteristicaInvalidaEx {
 		validarCaracteristicas(velocidad, fuerza, resistencia, destreza);
 		this.velocidad = new Atributo(Caracteristica.VELOCIDAD, velocidad);
 		this.fuerza = new Atributo(Caracteristica.FUERZA, fuerza);
@@ -128,22 +129,22 @@ public abstract class Competidor {
 		this.destreza = new Atributo(Caracteristica.DESTREZA, destreza);
 	}
 
-	private void validarCaracteristicas(double velocidad, double fuerza, double resistencia, double destreza) {
+	private void validarCaracteristicas(double velocidad, double fuerza, double resistencia, double destreza)
+			throws CaracteristicaInvalidaEx {
 		if (velocidad < 0 || fuerza < 0 || resistencia < 0 || destreza < 0)
 			throw new CaracteristicaInvalidaEx("Uno o más atributos indicados no son válidos.");
 	}
 
-	private void setNombrePersonaje(String nombrePersonaje) {
+	private void setNombrePersonaje(String nombrePersonaje) throws NombreInvalidoEx {
 		if (nombrePersonaje.isBlank() || nombrePersonaje.isEmpty() || nombrePersonaje == null)
 			throw new NombreInvalidoEx("El nombre indicado no es válido.");
 		this.nombrePersonaje = nombrePersonaje;
 	}
 
-	private void setNombreReal(String nombreReal) {
+	private void setNombreReal(String nombreReal) throws NombreInvalidoEx {
 		if (nombreReal.isBlank() || nombreReal.isEmpty() || nombreReal == null)
 			throw new NombreInvalidoEx("El nombre real indicado no es válido.");
 		this.nombreReal = nombreReal;
 	}
-
 
 }

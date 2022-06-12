@@ -58,7 +58,8 @@ public class Menu {
 
                 }
 
-            } catch (InputMismatchException | IOException e) {
+            } catch (InputMismatchException | IOException | LineaErroneaEx | NombreInvalidoEx | CaracteristicaInvalidaEx
+                    | MismoTipoCompetidorEx | TipoCompetidorInvalidoEx e) {
                 System.err.println("Opcion invalida. Por favor vuelva a ingresar numero de opción");
                 entrada.next();
             }
@@ -68,7 +69,8 @@ public class Menu {
 
     }
 
-    private void menuAdministracionPersonajes() throws IOException {
+    private void menuAdministracionPersonajes()
+            throws IOException, LineaErroneaEx, NombreInvalidoEx, CaracteristicaInvalidaEx {
         Scanner entradaM1 = new Scanner(System.in);
         int opcionM1 = 0;
         do {
@@ -111,7 +113,8 @@ public class Menu {
 
     }
 
-    private void menuAdministracionLigas() throws IOException {
+    private void menuAdministracionLigas() throws IOException, NombreInvalidoEx, CaracteristicaInvalidaEx,
+            TipoCompetidorInvalidoEx, MismoTipoCompetidorEx {
         Scanner entradaM2 = new Scanner(System.in);
         int opcionM2 = 0;
         do {
@@ -169,7 +172,7 @@ public class Menu {
 
     }
 
-    private void menuCombates() {
+    private void menuCombates() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner scannerCombate = new Scanner(System.in);
         int opcionCombate = 0;
         do {
@@ -195,7 +198,7 @@ public class Menu {
         } while (opcionCombate != 3);
     }
 
-    private void menuLigaVCompetidor() {
+    private void menuLigaVCompetidor() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner entradaMenuLiga = new Scanner(System.in);
         int opcionML = 0;
         do {
@@ -216,7 +219,7 @@ public class Menu {
 
     }
 
-    private void crearPersonajesMenu() {
+    private void crearPersonajesMenu() throws LineaErroneaEx, NombreInvalidoEx, CaracteristicaInvalidaEx {
         Scanner entradaCreacionPj = new Scanner(System.in);
         Competidor competidor = null;
         String nombreR, nombreP, tipoCompetidor;
@@ -254,7 +257,8 @@ public class Menu {
     }
 
     private Competidor crearCompetidorCargarEnMapa(Competidor competidor, String nombreR, String nombreP,
-            String tipoCompetidor, double v, double f, double r, double d) {
+            String tipoCompetidor, double v, double f, double r, double d)
+            throws LineaErroneaEx, NombreInvalidoEx, CaracteristicaInvalidaEx {
         if (tipoCompetidor.toLowerCase().trim().equals("héroe") || tipoCompetidor.toLowerCase().trim().equals("heroe"))
             competidor = cargarHeroeEnMapa(nombreR, nombreP, v, f, r, d);
         else if (tipoCompetidor.toLowerCase().trim().equals("villano"))
@@ -264,7 +268,8 @@ public class Menu {
         return competidor;
     }
 
-    private Competidor cargarVillanoEnMapa(String nombreR, String nombreP, double v, double f, double r, double d) {
+    private Competidor cargarVillanoEnMapa(String nombreR, String nombreP, double v, double f, double r, double d)
+            throws NombreInvalidoEx, CaracteristicaInvalidaEx {
         Competidor competidor;
         competidor = new Villano(nombreR, nombreP, v, f, r, d);
         mapaVillanos.put(indiceVillanos, competidor);
@@ -272,7 +277,8 @@ public class Menu {
         return competidor;
     }
 
-    private Competidor cargarHeroeEnMapa(String nombreR, String nombreP, double v, double f, double r, double d) {
+    private Competidor cargarHeroeEnMapa(String nombreR, String nombreP, double v, double f, double r, double d)
+            throws NombreInvalidoEx, CaracteristicaInvalidaEx {
         Competidor competidor;
         competidor = new Heroe(nombreR, nombreP, v, f, r, d);
         mapaHeroes.put(indiceHeroes, competidor);
@@ -288,7 +294,7 @@ public class Menu {
      * "clases.Competidor.competir(clases.Competidor, clases.Caracteristica)"
      * because the return value of "main.Menu.buscarHeroe(String)" is null
      */
-    private void competirPvP() {
+    private void competirPvP() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner scanner = new Scanner(System.in);
         int nHeroe, nVillano;
         String nCaracteristica;
@@ -309,7 +315,7 @@ public class Menu {
         }
     }
 
-    private void competirLHvV() {
+    private void competirLHvV() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner scanner = new Scanner(System.in);
         int nLigaHeroe, nVillano;
         String nCaracteristica;
@@ -330,7 +336,7 @@ public class Menu {
         }
     }
 
-    private void competirHvLV() {
+    private void competirHvLV() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner scanner = new Scanner(System.in);
         int nHeroe, nLigaVillano;
         String nCaracteristica;
@@ -351,7 +357,7 @@ public class Menu {
         }
     }
 
-    private void competirLvL() {
+    private void competirLvL() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner scanner = new Scanner(System.in);
         int nLigaHeroe, nLigaVillano;
         String nCaracteristica;
@@ -376,7 +382,7 @@ public class Menu {
      * Métodos para combatir
      */
 
-    private void combatir(int nHeroe, int nVillano, Caracteristica nCaracteristica) {
+    private void combatir(int nHeroe, int nVillano, Caracteristica nCaracteristica) throws MismoTipoCompetidorEx {
         int resultado;
         resultado = buscarHeroe(nHeroe).competir(buscarVillano(nVillano), nCaracteristica);
         if (resultado == -1)
@@ -388,7 +394,8 @@ public class Menu {
             System.out.println("Ganó Independiente: " + mapaHeroes.get(nHeroe).getNombrePersonaje());
     }
 
-    private void combatirLHvV(int nLigaHeroe, int nVillano, Caracteristica nCaracteristica) {
+    private void combatirLHvV(int nLigaHeroe, int nVillano, Caracteristica nCaracteristica)
+            throws MismoTipoCompetidorEx {
         int resultado;
         resultado = buscarLigaHeroe(nLigaHeroe).competir(buscarVillano(nVillano), nCaracteristica);
         if (resultado == -1)
@@ -400,7 +407,8 @@ public class Menu {
             System.out.println("Ganó Independiente: " + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje());
     }
 
-    private void combatirHvLV(int nHeroe, int nLigaVillano, Caracteristica nCaracteristica) {
+    private void combatirHvLV(int nHeroe, int nLigaVillano, Caracteristica nCaracteristica)
+            throws MismoTipoCompetidorEx {
         int resultado;
         resultado = buscarHeroe(nHeroe).competir(buscarVillano(nLigaVillano), nCaracteristica);
         if (resultado == -1)
@@ -412,7 +420,8 @@ public class Menu {
             System.out.println("Ganó Independiente: " + mapaHeroes.get(nHeroe).getNombrePersonaje());
     }
 
-    private void combatirLHvLV(int nLigaHeroe, int nLigaVillano, Caracteristica nCaracteristica) {
+    private void combatirLHvLV(int nLigaHeroe, int nLigaVillano, Caracteristica nCaracteristica)
+            throws MismoTipoCompetidorEx {
         int resultado;
         resultado = buscarLigaHeroe(nLigaHeroe).competir(buscarLigaVillano(nLigaVillano), nCaracteristica);
         if (resultado == -1)
@@ -424,7 +433,7 @@ public class Menu {
             System.out.println("Ganó Independiente: " + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje());
     }
 
-    private Caracteristica buscarCaracteristica(String nCaracteristica) {
+    private Caracteristica buscarCaracteristica(String nCaracteristica) throws LineaErroneaEx {
         validarInput(nCaracteristica);
         if (nCaracteristica.toLowerCase().trim().equals("velocidad"))
             return Caracteristica.VELOCIDAD;
@@ -477,16 +486,18 @@ public class Menu {
         return mapaLigasVillanos.get(villanoBuscado);
     }
 
-    private void validarInput(String s) {
+    private void validarInput(String s) throws LineaErroneaEx {
         if (s.isBlank() || s.isEmpty() || s == null || s.equals(null))
             throw new LineaErroneaEx("Los valores ingresados no son correctos.");
     }
 
     /**
      * @throws IOException
+     * @throws CaracteristicaInvalidaEx
+     * @throws NombreInvalidoEx
      * @post: Carga el archivo desde la ruta especificada.
      */
-    private void menuCargarArchivo() throws IOException {
+    private void menuCargarArchivo() throws IOException, NombreInvalidoEx, CaracteristicaInvalidaEx {
 
         Scanner entradaArchivo = new Scanner(System.in);
         try {
@@ -502,9 +513,14 @@ public class Menu {
 
     /**
      * @throws IOException
+     * @throws MismoTipoCompetidorEx
+     * @throws TipoCompetidorInvalidoEx
+     * @throws CaracteristicaInvalidaEx
+     * @throws NombreInvalidoEx
      * @post: Carga el archivo desde la ruta especificada.
      */
-    private void menuCargarArchivoParaLiga() throws IOException {
+    private void menuCargarArchivoParaLiga() throws IOException, NombreInvalidoEx, CaracteristicaInvalidaEx,
+            TipoCompetidorInvalidoEx, MismoTipoCompetidorEx {
 
         Scanner entradaArchivo = new Scanner(System.in);
         try {
@@ -518,7 +534,8 @@ public class Menu {
         }
     }
 
-    public void cargarArchivo(String pArchivo) throws LineaErroneaEx, IOException {
+    public void cargarArchivo(String pArchivo)
+            throws LineaErroneaEx, IOException, NombreInvalidoEx, CaracteristicaInvalidaEx {
         BufferedReader lector = new BufferedReader(new FileReader(pArchivo));
 
         try {
@@ -548,7 +565,8 @@ public class Menu {
 
     }
 
-    public void cargarArchivoParaLiga(String pArchivo) throws LineaErroneaEx, IOException {
+    public void cargarArchivoParaLiga(String pArchivo) throws LineaErroneaEx, IOException, NombreInvalidoEx,
+            CaracteristicaInvalidaEx, TipoCompetidorInvalidoEx, MismoTipoCompetidorEx {
         BufferedReader lector = new BufferedReader(new FileReader(pArchivo));
 
         try {
@@ -578,7 +596,8 @@ public class Menu {
 
     }
 
-    private Competidor crearCompetidorPorArchivo(String linea) throws LineaErroneaEx {
+    private Competidor crearCompetidorPorArchivo(String linea)
+            throws LineaErroneaEx, NombreInvalidoEx, CaracteristicaInvalidaEx {
 
         Competidor competidor;
 
@@ -632,7 +651,8 @@ public class Menu {
         return competidor;
     }
 
-    private Liga crearLigaPorArchivo(String linea) throws LineaErroneaEx {
+    private Liga crearLigaPorArchivo(String linea) throws LineaErroneaEx, NombreInvalidoEx, CaracteristicaInvalidaEx,
+            TipoCompetidorInvalidoEx, MismoTipoCompetidorEx {
 
         Liga liga;
 

@@ -3,17 +3,19 @@ package clases;
 import java.util.ArrayList;
 import java.util.List;
 
+import excepciones.CaracteristicaInvalidaEx;
 import excepciones.MismoTipoCompetidorEx;
+import excepciones.NombreInvalidoEx;
 import excepciones.TipoCompetidorInvalidoEx;
 
 public class Liga extends Competidor {
 	private List<Competidor> competidores = new ArrayList<Competidor>();
 
-	public Liga(String nombre) {
+	public Liga(String nombre) throws NombreInvalidoEx, CaracteristicaInvalidaEx {
 		super(nombre);
 	}
 
-	public void addCompetidor(Competidor competidor) {
+	public void addCompetidor(Competidor competidor) throws TipoCompetidorInvalidoEx, MismoTipoCompetidorEx {
 		validarCompetidor(competidor);
 
 		if (competidores.isEmpty())
@@ -24,8 +26,6 @@ public class Liga extends Competidor {
 			throw new TipoCompetidorInvalidoEx("Los competidores deben ser del mismo tipo en cada Liga.");
 
 	}
-
-	
 
 	@Override
 	public boolean esHeroe() {
@@ -77,7 +77,7 @@ public class Liga extends Competidor {
 				+ ", resistencia=" + getResistencia() + ", destreza=" + getDestreza() + "]";
 	}
 
-	private void validarCompetidor(Competidor competidor) {
+	private void validarCompetidor(Competidor competidor) throws MismoTipoCompetidorEx, TipoCompetidorInvalidoEx {
 		if (this.equals(competidor)) {
 			throw new MismoTipoCompetidorEx("No es posible a�adir una liga a si misma");
 		}
