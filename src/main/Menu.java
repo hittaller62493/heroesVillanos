@@ -33,16 +33,16 @@ public class Menu {
 
     public void menu3() {
         Scanner entrada = new Scanner(System.in);
-        int opcion = 0, opcionCombate;
+        int opcion = 0;
         do {
             try {
                 System.out.println("\t.: Bienvenidos a Heroes y Villanos :.");
-                System.out.println("1. Administracion de Personajes.");
-                System.out.println("2. Administracion de Ligas.");
-                System.out.println("3. Realizacion de combates.");
+                System.out.println("1. Administración de Personajes.");
+                System.out.println("2. Administración de Ligas.");
+                System.out.println("3. Realización de combates.");
                 System.out.println("4. Reportes.");
                 System.out.println("5. Salir del juego.");
-                System.out.print("Opcion: ");
+                System.out.print("Opción numérica:  ");
                 opcion = entrada.nextInt();
                 switch (opcion) {
                     case 1:
@@ -58,16 +58,17 @@ public class Menu {
                         menuReportes();
                         break;
                     case 5:
+                        System.out.println("\t-=-=-=-=-=- [ \t G \t A \t M \t E \t O \t V \t E \t R ] -=-=-=-=-=-");
                         System.exit(0);
 
                 }
 
             } catch (InputMismatchException | IOException | LineaErroneaEx | NombreInvalidoEx | CaracteristicaInvalidaEx
-                    | MismoTipoCompetidorEx | TipoCompetidorInvalidoEx e) {
-                System.err.println("Opcion invalida. Por favor vuelva a ingresar numero de opción");
+                    | MismoTipoCompetidorEx | TipoCompetidorInvalidoEx | NoExistenCompetidoresEx e) {
+                System.err.println(" ==> Opción inválida. Por favor vuelva a ingresar número de opción <==\n");
                 entrada.next();
             }
-        } while (opcion != 4);
+        } while (opcion != 5);
 
         // Corregir cuando el input es una letra
 
@@ -80,13 +81,13 @@ public class Menu {
         String rutaNuevoArchivo = "";
         do {
             try {
-                System.out.println("--Administracion de Personajes--");
+                System.out.println("\n\t[ ADMINISTRACIÓN DE PERSONAJES ]");
                 System.out.println("1. Carga desde archivo");
                 System.out.println("2. Creacion de personaje");
                 System.out.println("3. Listado de personajes");
                 System.out.println("4. Guardar personajes en un archivo");
                 System.out.println("5. <== Volver a menú anterior");
-                System.out.print("Opcion: ");
+                System.out.print("Opción numérica:  ");
                 opcionM1 = entradaM1.nextInt();
                 switch (opcionM1) {
                     case 1:
@@ -99,6 +100,7 @@ public class Menu {
                         mostrarPersonajes();
                         break;
                     case 4:
+                        System.out.println("\n\t [ GUARDAR COMPETIDORES ]");
                         System.out.println("Escriba la ruta del nuevo archivo: ");
                         rutaNuevoArchivo = entradaM1.next();
                         guardarPersonajes(rutaNuevoArchivo);
@@ -108,8 +110,8 @@ public class Menu {
 
                 }
             } catch (InputMismatchException e) {
-                System.err.println("Opcion invalida. Por favor vuelva a ingresar numero de opción");
-
+                System.err.println(" ==> Opción inválida. Por favor vuelva a ingresar número de opción <==\n");
+                entradaM1.next();
             }
 
         } while (opcionM1 != 5);
@@ -121,51 +123,73 @@ public class Menu {
     }
 
     private void menuAdministracionLigas() throws IOException, NombreInvalidoEx, CaracteristicaInvalidaEx,
-            TipoCompetidorInvalidoEx, MismoTipoCompetidorEx {
-        Scanner entradaM2 = new Scanner(System.in);
-        int opcionM2 = 0;
-        String rutaNuevoArchivo = "";
-        do {
-            try {
-                System.out.println("--Administracion de Liga--");
-                System.out.println("1. Carga desde archivo");
-                System.out.println("2. Creacion de liga");
-                System.out.println("3. Listado de ligas");
-                System.out.println("4. Guardar ligas en un archivo");
-                System.out.println("5. <== Volver a menú anterior");
-                System.out.print("Opcion: ");
-                opcionM2 = entradaM2.nextInt();
-                switch (opcionM2) {
-                    case 1:
-                        menuCargarArchivoParaLiga();
-                        break;
-                    case 2:
-                        crearLigaMenu();
-                        break;
-                    case 3:
-                        mostrarLigas();
-                        break;
-                    case 4:
-                        System.out.println("Escriba la ruta del nuevo archivo: ");
-                        rutaNuevoArchivo = entradaM2.next();
-                        guardarLigas(rutaNuevoArchivo);
-                        break;
-                    case 5:
-                        break;
+            TipoCompetidorInvalidoEx, MismoTipoCompetidorEx, NoExistenCompetidoresEx {
+        try {
+            validarQueExistenCompetidores();
+            Scanner entradaM2 = new Scanner(System.in);
+            int opcionM2 = 0;
+            String rutaNuevoArchivo = "";
+            do {
+                try {
+                    System.out.println("\n\t[ ADMINISTRACIÓN DE LIGAS ]");
+                    System.out.println("1. Carga desde archivo");
+                    System.out.println("2. Creacion de liga");
+                    System.out.println("3. Listado de ligas");
+                    System.out.println("4. Guardar ligas en un archivo");
+                    System.out.println("5. <== Volver a menú anterior");
+                    System.out.print("Opción numérica:  ");
+                    opcionM2 = entradaM2.nextInt();
+                    switch (opcionM2) {
+                        case 1:
+                            menuCargarArchivoParaLiga();
+                            break;
+                        case 2:
+                            crearLigaMenu();
+                            break;
+                        case 3:
+                            mostrarLigas();
+                            break;
+                        case 4:
+                            System.out.println("\n\t [ GUARDAR LIGAS ]");
+                            System.out.println("Escriba la ruta del nuevo archivo: ");
+                            rutaNuevoArchivo = entradaM2.next();
+                            guardarLigas(rutaNuevoArchivo);
+                            break;
+                        case 5:
+                            break;
 
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println(" ==> Opción inválida. Por favor vuelva a ingresar número de opción <==\n");
+                    entradaM2.next();
                 }
-            } catch (InputMismatchException e) {
-                System.err.println("Opcion invalida. Por favor vuelva a ingresar numero de opción");
-                entradaM2.next();
-            }
 
-        } while (opcionM2 != 5);
+            } while (opcionM2 != 5);
+        } catch (NoExistenCompetidoresEx e) {
+            System.err.println(e);
+        }
+    }
+
+    private void validarQueExistenCompetidores() throws NoExistenCompetidoresEx {
+        if (conjuntoCompetidores.isEmpty())
+            throw new NoExistenCompetidoresEx(
+                    "Se deben CARGAR o CREAR Competidores antes de ingresar a esta opción.\n");
     }
 
     private void guardarLigas(String rutaNuevoArchivo) throws IOException {
         guardarLigasCompetidores(rutaNuevoArchivo);
 
     }
+
+    /**
+     * Guarda la lista de ligas completa en disco, en el archivo especificado como
+     * parámetro
+     * Con el siguiente formato. Una línea por competidor:
+     * NombreLiga, Competidor/Liga A, Competidor/Liga B, etc.
+     * 
+     * @param pArchivo nombre del archivo (path absoluto o relativo
+     *                 a la carpeta src del proyecto
+     */
 
     private void guardarLigasCompetidores(String pArchivo) throws IOException {
         FileWriter guardador = null;
@@ -220,12 +244,13 @@ public class Menu {
         String nombreLiga;
         int opcionMenuLiga = 0;
         try {
-            System.out.println();
-            System.out.println("-.Tipee correctamente los siguientes datos solicitados.-");
-            System.out.println("-.Los atributos deben ser numericos y positivos.-");
+            System.out.println("\n\t [ CREAR LIGA ]");
+            System.out.println("# Tipee correctamente los siguientes datos solicitados.");
+            System.out.println("# Una vez creada, por favor añada competidores a la misma.");
             System.out.print("Nombre de Liga: ");
             nombreLiga = entradaCreacionLiga.nextLine();
             liga = new Liga(nombreLiga);
+            System.out.println("\n\t [ Añadir Competidores a la Liga ]");
             System.out.println("Seleccione tipo de Liga de Héroes o Villanos: ");
             System.out.println("1. Liga de Héroes");
             System.out.println("2. Liga de Villanos");
@@ -242,10 +267,10 @@ public class Menu {
 
             }
 
-            System.out.println("-# Liga añadida correctamente #-");
+            System.out.println("\n\t#### Liga añadida CORRECTAMENTE ####");
 
         } catch (InputMismatchException | NombreInvalidoEx | CaracteristicaInvalidaEx e) {
-            System.err.println("Datos ingresados incorrectos, vuelva a seleccionar una opción.");
+            System.err.println("Datos ingresados incorrectamente. Vuelva a seleccionar una opción.");
 
         }
 
@@ -256,18 +281,18 @@ public class Menu {
         int seleccionHeroe;
         boolean cargaLiga = true;
         try {
-
             do {
                 try {
-                    System.out.println(" -- Héroes disponibles para agregar a la Liga --");
+                    System.out.println("\n\t [ Héroes disponibles para agregar a la Liga # " + liga.getNombrePersonaje()
+                            + " # ]\n");
                     mostrarHeroes();
-                    System.out.println(" -- Seleccione un héroe con opción numérica o escriba -1 para salir --");
+                    System.out.println("\n ==> Seleccione un héroe con opción numérica o escriba -1 para salir");
                     seleccionHeroe = cargaHeroesALiga.nextInt();
                     if (seleccionHeroe == -1) {
                         cargaLiga = false;
                     } else {
                         liga.addCompetidor(buscarHeroe(seleccionHeroe));
-                        System.out.println("-- Competidor añadido correctamente --");
+                        System.out.println("#- Competidor añadido correctamente -#");
                     }
 
                 } catch (TipoCompetidorInvalidoEx | MismoTipoCompetidorEx e) {
@@ -294,15 +319,16 @@ public class Menu {
 
             do {
                 try {
-                    System.out.println(" -- Villanos disponibles para agregar a la Liga --");
+                    System.out.println("\n\t [ Villanos disponibles para agregar a la Liga # "
+                            + liga.getNombrePersonaje() + " # ]\n");
                     mostrarVillanos();
-                    System.out.println(" -- Seleccione un villano con opción numérica o escriba -1 para salir --");
+                    System.out.println("\n ==> Seleccione un villano con opción numérica o escriba -1 para salir");
                     seleccionVillano = cargaVillanosALiga.nextInt();
                     if (seleccionVillano == -1) {
                         cargaLiga = false;
                     } else {
                         liga.addCompetidor(buscarVillano(seleccionVillano));
-                        System.out.println("-- Competidor añadido correctamente --");
+                        System.out.println("#- Competidor añadido correctamente -#");
                     }
 
                 } catch (TipoCompetidorInvalidoEx | MismoTipoCompetidorEx e) {
@@ -322,45 +348,55 @@ public class Menu {
     }
 
     private void mostrarPersonajes() {
+        System.out.println("\n\t -------- [Lista de Competidores] --------\n");
+        System.out.println("\t [Lista de Héroes]\n");
         mostrarHeroes();
+        System.out.println("\n\t [Lista de Villanos]\n");
         mostrarVillanos();
+        System.out.println("\t-----------------------------------------");
     }
 
     private void menuCombates() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner scannerCombate = new Scanner(System.in);
         int opcionCombate = 0;
-        do {
-            System.out.println("\t.:MENU COMBATE:.");
-            System.out.println("1. Personaje vs Personaje");
-            System.out.println("2. Personaje vs Liga");
-            System.out.println("3. Liga vs Liga");
-            System.out.println("4. <== Volver a menú anterior");
-            System.out.print("Opcion:");
+        try {
+            validarQueExistenCompetidores();
 
-            opcionCombate = scannerCombate.nextInt();
-            switch (opcionCombate) {
-                case 1:
-                    competirPvP();
-                    break;
-                case 2:
-                    menuLigaVCompetidor();
-                    break;
-                case 3:
-                    competirLvL();
-                    break;
-                case 4:
-                    break;
-            }
+            do {
+                System.out.println("\n\t [ MENU DE COMBATE ]");
+                System.out.println("1. Personaje vs Personaje");
+                System.out.println("2. Personaje vs Liga");
+                System.out.println("3. Liga vs Liga");
+                System.out.println("4. <== Volver a menú anterior");
+                System.out.print("Opción numérica: ");
 
-        } while (opcionCombate != 4);
+                opcionCombate = scannerCombate.nextInt();
+                switch (opcionCombate) {
+                    case 1:
+                        competirPvP();
+                        break;
+                    case 2:
+                        menuLigaVCompetidor();
+                        break;
+                    case 3:
+                        competirLvL();
+                        break;
+                    case 4:
+                        break;
+                }
+
+            } while (opcionCombate != 4);
+        } catch (NoExistenCompetidoresEx e) {
+            System.err.println(e);
+        }
     }
 
     private void menuLigaVCompetidor() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner entradaMenuLiga = new Scanner(System.in);
         int opcionML = 0;
         do {
-            System.out.println("-- Menu Liga vs Competidor --");
-            System.out.println("1. Liga Heroe vs Liga Villano");
+            System.out.println("\n\t [ LIGA vs COMPETIDOR ]");
+            System.out.println("1. Liga Heroe vs Villano");
             System.out.println("2. Heroe vs Liga Villano");
             System.out.println("3. <== Volver a menú anterior");
             opcionML = entradaMenuLiga.nextInt();
@@ -385,9 +421,9 @@ public class Menu {
         String nombreR, nombreP, tipoCompetidor;
         double velo, fuerza, resistencia, destreza;
         try {
-            System.out.println();
-            System.out.println("-.Tipee correctamente los siguientes datos solicitados.-");
-            System.out.println("-.Los atributos deben ser numericos y positivos.-");
+            System.out.println("\n\t [ CREAR PERSONAJE ]");
+            System.out.println("# Tipee correctamente los siguientes datos solicitados.");
+            System.out.println("# Los atributos deben ser numéricos y positivos.");
             System.out.print("Héroe o Villano: ");
             tipoCompetidor = entradaCreacionPj.nextLine();
             System.out.print("Nombre real: ");
@@ -419,25 +455,30 @@ public class Menu {
     private void menuReportes() throws LineaErroneaEx, MismoTipoCompetidorEx {
         Scanner entradaMenuReportes = new Scanner(System.in);
         int opcionR = 0;
-        do {
-            System.out.println("-- Menu de Reportes --");
-            System.out.println("1. Vencedores a un Personaje ");
-            System.out.println("2. Listado ordenado de competidores por caracteristicas");
-            System.out.println("3. <== Volver al menu anterior");
+        try {
+            validarQueExistenCompetidores();
+            do {
+                System.out.println("\n\t [ MENU DE REPORTES ]");
+                System.out.println("1. Vencedores a un Personaje ");
+                System.out.println("2. Listado ordenado de competidores por características");
+                System.out.println("3. <== Volver al menu anterior");
 
-            opcionR = entradaMenuReportes.nextInt();
-            switch (opcionR) {
-                case 1:
-                    menuDeVencedores();
-                    break;
-                case 2:
-                    menuDeCompetidoresOrdenados();
-                    break;
-                case 3:
-                    break;
-            }
+                opcionR = entradaMenuReportes.nextInt();
+                switch (opcionR) {
+                    case 1:
+                        menuDeVencedores();
+                        break;
+                    case 2:
+                        menuDeCompetidoresOrdenados();
+                        break;
+                    case 3:
+                        break;
+                }
 
-        } while (opcionR != 3);
+            } while (opcionR != 3);
+        } catch (NoExistenCompetidoresEx e) {
+            System.err.println(e);
+        }
 
     }
 
@@ -450,79 +491,79 @@ public class Menu {
         Caracteristica caracteristicaDos = null;
         int opcionMVO = 0;
 
-        System.out.println("-- Seleccione la PRIMER caracteristica para ordenar --");
-        System.out.println("1: Velocidad");
-        System.out.println("2: Fuerza");
-        System.out.println("3: Resistencia");
-        System.out.println("4: Destreza");
+        System.out.println("\n Seleccione la PRIMER característica para ordenar");
+        System.out.println("1. Velocidad");
+        System.out.println("2. Fuerza");
+        System.out.println("3. Resistencia");
+        System.out.println("4. Destreza");
         opcionMVO = entradaMenuCompetidoresOrdenados.nextInt();
         switch (opcionMVO) {
             case 1:
                 caracteristicaUno = Caracteristica.VELOCIDAD;
-                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaUno + " --"); {
+                System.out.println("\n # La primer característica seleccionada es: " + caracteristicaUno); {
                 break;
             }
             case 2:
                 caracteristicaUno = Caracteristica.FUERZA;
-                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaUno + " --"); {
+                System.out.println("\n # La primer característica seleccionada es: " + caracteristicaUno); {
                 break;
             }
             case 3:
                 caracteristicaUno = Caracteristica.RESISTENCIA;
-                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaUno + " --"); {
+                System.out.println("\n # La primer característica seleccionada es: " + caracteristicaUno); {
                 break;
             }
             case 4:
                 caracteristicaUno = Caracteristica.DESTREZA;
-                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaUno + " --"); {
+                System.out.println("\n # La primer característica seleccionada es: " + caracteristicaUno); {
                 break;
             }
             case 5:
                 break;
         }
-        System.out.println("-- Seleccione la SEGUNDA caracteristica para ordenar --");
-        System.out.println("1: Velocidad");
-        System.out.println("2: Fuerza");
-        System.out.println("3: Resistencia");
-        System.out.println("4: Destreza");
+        System.out.println("\n Seleccione la SEGUNDA característica para ordenar");
+        System.out.println("1. Velocidad");
+        System.out.println("2. Fuerza");
+        System.out.println("3. Resistencia");
+        System.out.println("4. Destreza");
         opcionMVO = entradaMenuCompetidoresOrdenados.nextInt();
         switch (opcionMVO) {
             case 1:
                 caracteristicaDos = Caracteristica.VELOCIDAD;
-                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaDos + " --"); {
+                System.out.println("\n #La primer característica seleccionada es: " + caracteristicaDos); {
                 break;
             }
             case 2:
                 caracteristicaDos = Caracteristica.FUERZA;
-                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaDos + " --"); {
+                System.out.println("\n #La primer característica seleccionada es: " + caracteristicaDos); {
                 break;
             }
             case 3:
                 caracteristicaDos = Caracteristica.RESISTENCIA;
-                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaDos + " --"); {
+                System.out.println("\n #La primer característica seleccionada es: " + caracteristicaDos); {
                 break;
             }
             case 4:
                 caracteristicaDos = Caracteristica.DESTREZA;
-                System.out.println("-- La primer caracteristica seleccionada es: " + caracteristicaDos + " --"); {
+                System.out.println("\n # La primer característica seleccionada es: " + caracteristicaDos); {
                 break;
             }
             case 5:
                 break;
         }
-        System.out.println("-- Seleccione orden Ascendente o Descendente --");
+        System.out.println("\n\t [Seleccionar orden Descendente o Ascendente]");
         System.out.println("1. Mayor a menor");
         System.out.println("2. Menor a mayor");
         opcionMVO = entradaMenuCompetidoresOrdenados.nextInt();
         switch (opcionMVO) {
             case 1:
-                System.out.println("-- LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", "
+                System.out.println("\n==> LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", "
                         + caracteristicaDos + " --");
                 ordenarPorCaracteristicasDescendente(caracteristicaUno, caracteristicaDos);
                 break;
 
             case 2:
-                System.out.println("-- LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", "
+                System.out.println("\n==> LISTADO ORDENADO DE PERSONAJES POR " + caracteristicaUno + ", "
                         + caracteristicaDos + " --");
                 ordenarPorCaracteristicasAscendente(caracteristicaUno, caracteristicaDos);
                 break;
@@ -573,30 +614,27 @@ public class Menu {
         Caracteristica carac;
         int opcionML = 0;
 
-        System.out.println("-- Seleccione tipo del competidor a vencer --");
-        System.out.println("1: Liga");
-        System.out.println("2: Competidor");
+        System.out.println("\n\t [Seleccionar Tipo de Competidor a Vencer]");
+        System.out.println("1. Liga");
+        System.out.println("2. Competidor");
         opcionML = entradaMenuVencedores.nextInt();
         switch (opcionML) {
             case 1:
                 competidorAVencer = seleccionLiga(entradaMenuVencedores);
-                System.out.println("-- Liga seleccionada con exito --");
-                System.out.println("-- Seleccione la caracteristica para empezar a combatir --");
+                System.out.println("\n#- Liga seleccionada con éxito -#");
+                System.out.println("\n-- Seleccione la característica para empezar a combatir --");
                 caracteristica = entradaMenuVencedores.next();
                 carac = buscarCaracteristica(caracteristica);
-                System.out.println("-- La caracteristica seleccionada es: " + carac + " --"); {
+                System.out.println("\n-- La característica seleccionada es: " + carac + " --");
                 vencedoresA(competidorAVencer, carac);
-
-            }
-
                 break;
             case 2:
                 competidorAVencer = seleccionCompetidor(entradaMenuVencedores);
-                System.out.println("-- Competidor seleccionado con exito --");
-                System.out.println("-- Seleccione la caracteristica para empezar a combatir --");
+                System.out.println("\n#- Competidor seleccionado con éxito -#");
+                System.out.println("\n-- Seleccione la característica para empezar a combatir --");
                 caracteristica = entradaMenuVencedores.next();
                 carac = buscarCaracteristica(caracteristica);
-                System.out.println("-- La caracteristica seleccionada es: " + carac + " --");
+                System.out.println("\n-- La característica seleccionada es: " + carac + " --");
                 vencedoresA(competidorAVencer, carac);
                 break;
             case 3:
@@ -606,10 +644,12 @@ public class Menu {
     }
 
     private void vencedoresA(Competidor competidorAVencer, Caracteristica carac) {
+        System.out.println("\n Los siguientes competidores vencen a " + competidorAVencer.getNombrePersonaje()
+                + " por la característica " + carac + ": \n");
         for (Competidor competidor : conjuntoCompetidores) {
             try {
                 if (competidor.esGanador(competidorAVencer, carac)) {
-                    System.out.println("- " + competidor.getNombrePersonaje());
+                    System.out.println("-> " + competidor.getNombrePersonaje());
                 }
             } catch (MismoTipoCompetidorEx e) {
             }
@@ -620,20 +660,20 @@ public class Menu {
         Competidor competidorAVencer = null;
         int subComp = 0;
 
-        System.out.println("Seleccione tipo de competidor --");
-        System.out.println("1: Heroe");
-        System.out.println("2: Villano");
+        System.out.println("\n\t [Selección de Tipo de Competidor]");
+        System.out.println("1. Héroe");
+        System.out.println("2. Villano");
         subComp = entradaMenuVencedores.nextInt();
         switch (subComp) {
             case 1:
                 mostrarHeroes();
-                System.out.println("-- Seleccione Heroe a vencer --");
+                System.out.println("\nIndique Héroe a Vencer (opción numérica): ");
                 subComp = entradaMenuVencedores.nextInt();
                 competidorAVencer = buscarHeroe(subComp);
                 break;
             case 2:
                 mostrarVillanos();
-                System.out.println("-- Seleccione Villano a vencer --");
+                System.out.println("\nIndique Villano a Vencer (opción numérica): ");
                 subComp = entradaMenuVencedores.nextInt();
                 competidorAVencer = buscarVillano(subComp);
                 break;
@@ -648,20 +688,20 @@ public class Menu {
         Competidor competidorAVencer = null;
         int subLiga = 0;
 
-        System.out.println("Seleccione tipo de liga --");
-        System.out.println("1: Liga de Heroes");
-        System.out.println("2: Liga de Villanos");
+        System.out.println("\n\t [Selección de Tipo Liga]");
+        System.out.println("1. Liga de Heroes");
+        System.out.println("2. Liga de Villanos");
         subLiga = entradaMenuVencedores.nextInt();
         switch (subLiga) {
             case 1:
                 mostrarLigasHeroes();
-                System.out.println("-- Seleccione liga a vencer -- ");
+                System.out.println("\nIndique Liga a Vencer (opción numérica): ");
                 subLiga = entradaMenuVencedores.nextInt();
                 competidorAVencer = buscarLigaHeroe(subLiga);
                 break;
             case 2:
                 mostrarLigasVillanos();
-                System.out.println("-- Seleccione liga a vencer -- ");
+                System.out.println("\nIndique Liga a Vencer (opción numérica): ");
                 subLiga = entradaMenuVencedores.nextInt();
                 competidorAVencer = buscarLigaVillano(subLiga);
                 break;
@@ -677,7 +717,7 @@ public class Menu {
         else if (competidorEsVillano(tipoCompetidor))
             competidor = cargarVillanoEnMapa(nombreR, nombreP, v, f, r, d);
         else
-            throw new LineaErroneaEx("El tipo debe ser Héroe o Villano");
+            throw new LineaErroneaEx("El tipo debe ser Héroe o Villano \n");
         return competidor;
     }
 
@@ -721,15 +761,15 @@ public class Menu {
         int nHeroe, nVillano;
         String nCaracteristica;
         try {
-            System.out.println("Listado de Héroes -----------------");
+            System.out.println("\n\t [ LISTADO DE HÉROES ]\n");
             mostrarHeroes();
-            System.out.println("Elegir Heroe:");
+            System.out.println("\n# Elegir HÉROE:\n");
             nHeroe = scanner.nextInt();
-            System.out.println("Listado de Villanos -----------------");
+            System.out.println("\n\t [ LISTADO DE VILLANOS ]\n");
             mostrarVillanos();
-            System.out.println("Elegir Villano: ");
+            System.out.println("\n# Elegir VILLANO: \n");
             nVillano = scanner.nextInt();
-            System.out.println("Elegir Característica para combatir: ");
+            System.out.println("\n# Elegir Característica para combatir: ");
             nCaracteristica = scanner.next();
             combatir(nHeroe, nVillano, buscarCaracteristica(nCaracteristica));
         } catch (InputMismatchException e) {
@@ -742,15 +782,15 @@ public class Menu {
         int nLigaHeroe, nVillano;
         String nCaracteristica;
         try {
-            System.out.println("Listado de Liga Héroes -----------------");
+
             mostrarLigasHeroes();
-            System.out.println("Elegir Liga de Héroes:");
+            System.out.println("\n# Elegir LIGA de HÉROES:\n");
             nLigaHeroe = scanner.nextInt();
-            System.out.println("Listado de Villanos -----------------");
+            System.out.println("\n\t [ LISTADO DE VILLANOS ]\n");
             mostrarVillanos();
-            System.out.println("Elegir Villano: ");
+            System.out.println("\n# Elegir VILLANO:\n");
             nVillano = scanner.nextInt();
-            System.out.println("Elegir Característica para combatir: ");
+            System.out.println("\n# Elegir Característica para combatir: ");
             nCaracteristica = scanner.next();
             combatirLHvV(nLigaHeroe, nVillano, buscarCaracteristica(nCaracteristica));
         } catch (InputMismatchException e) {
@@ -763,15 +803,13 @@ public class Menu {
         int nHeroe, nLigaVillano;
         String nCaracteristica;
         try {
-            System.out.println("Listado de Héroes -----------------");
             mostrarHeroes();
-            System.out.println("Elegir Héroe:");
+            System.out.println("\n# Elegir HÉROE:\n");
             nHeroe = scanner.nextInt();
-            System.out.println("Listado Ligas de Villanos -----------------");
             mostrarLigasVillanos();
-            System.out.println("Elegir Villano: ");
+            System.out.println("\n# Elegir LIGA de VILLANOS:\n");
             nLigaVillano = scanner.nextInt();
-            System.out.println("Elegir Característica para combatir: ");
+            System.out.println("\n# Elegir Característica para combatir: ");
             nCaracteristica = scanner.next();
             combatirHvLV(nHeroe, nLigaVillano, buscarCaracteristica(nCaracteristica));
         } catch (InputMismatchException e) {
@@ -784,15 +822,13 @@ public class Menu {
         int nLigaHeroe, nLigaVillano;
         String nCaracteristica;
         try {
-            System.out.println("Listado Ligas de Héroes -----------------");
             mostrarLigasHeroes();
-            System.out.println("Elegir Liga Héroes:");
+            System.out.println("\n# Elegir LIGA de HÉROES: \n");
             nLigaHeroe = scanner.nextInt();
-            System.out.println("Listado Ligas de Villanos -----------------");
             mostrarLigasVillanos();
-            System.out.println("Elegir Liga de Villano: ");
+            System.out.println("\n# Elegir LIGA de VILLANOS:\n");
             nLigaVillano = scanner.nextInt();
-            System.out.println("Elegir Característica para combatir: ");
+            System.out.println("\n# Elegir Característica para combatir: ");
             nCaracteristica = scanner.next();
             combatirLHvLV(nLigaHeroe, nLigaVillano, buscarCaracteristica(nCaracteristica));
         } catch (InputMismatchException e) {
@@ -808,12 +844,15 @@ public class Menu {
         int resultado;
         resultado = buscarHeroe(nHeroe).competir(buscarVillano(nVillano), nCaracteristica);
         if (resultado == -1)
-            System.out.println("Ganó " + mapaVillanos.get(nVillano).getNombrePersonaje());
+            System.out.println(
+                    "\n\t*** El Ganador del combate es: " + mapaVillanos.get(nVillano).getNombrePersonaje() + " ***\n");
         if (resultado == 0)
-            System.out.println("Hubo empate entre " + mapaHeroes.get(nHeroe).getNombrePersonaje() + "y"
-                    + mapaVillanos.get(nVillano).getNombrePersonaje());
+            System.out.println(
+                    "\n\t*** Hubo EMPATE entre los competidores " + mapaHeroes.get(nHeroe).getNombrePersonaje() + " y "
+                            + mapaVillanos.get(nVillano).getNombrePersonaje() + " ***\n");
         if (resultado == 1)
-            System.out.println("Ganó  " + mapaHeroes.get(nHeroe).getNombrePersonaje());
+            System.out.println(
+                    "\n\t*** El Ganador del combate es: " + mapaHeroes.get(nHeroe).getNombrePersonaje() + " ***\n");
     }
 
     private void combatirLHvV(int nLigaHeroe, int nVillano, Caracteristica nCaracteristica)
@@ -821,12 +860,15 @@ public class Menu {
         int resultado;
         resultado = buscarLigaHeroe(nLigaHeroe).competir(buscarVillano(nVillano), nCaracteristica);
         if (resultado == -1)
-            System.out.println("Ganó " + mapaVillanos.get(nVillano).getNombrePersonaje());
+            System.out.println(
+                    "\n\t*** El Ganador del combate es: " + mapaVillanos.get(nVillano).getNombrePersonaje() + " ***\n");
         if (resultado == 0)
-            System.out.println("Hubo empate entre " + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje() + "y"
-                    + mapaVillanos.get(nVillano).getNombrePersonaje());
+            System.out.println("\n\t*** Hubo EMPATE entre los competidores "
+                    + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje() + " y "
+                    + mapaVillanos.get(nVillano).getNombrePersonaje() + " ***\n");
         if (resultado == 1)
-            System.out.println("Ganó Independiente: " + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje());
+            System.out.println("\n\t*** El Ganador del combate es: "
+                    + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje() + " ***\n");
     }
 
     private void combatirHvLV(int nHeroe, int nLigaVillano, Caracteristica nCaracteristica)
@@ -834,12 +876,15 @@ public class Menu {
         int resultado;
         resultado = buscarHeroe(nHeroe).competir(buscarVillano(nLigaVillano), nCaracteristica);
         if (resultado == -1)
-            System.out.println("Ganó " + mapaLigasVillanos.get(nLigaVillano).getNombrePersonaje());
+            System.out.println(
+                    "\n\t*** El Ganador del combate es: " + mapaLigasVillanos.get(nLigaVillano).getNombrePersonaje());
         if (resultado == 0)
-            System.out.println("Hubo empate entre " + mapaHeroes.get(nHeroe).getNombrePersonaje() + "y"
-                    + mapaVillanos.get(nLigaVillano).getNombrePersonaje());
+            System.out.println(
+                    "\n\t*** Hubo EMPATE entre los competidores " + mapaHeroes.get(nHeroe).getNombrePersonaje() + " y "
+                            + mapaVillanos.get(nLigaVillano).getNombrePersonaje() + " ***\n");
         if (resultado == 1)
-            System.out.println("Ganó Independiente: " + mapaHeroes.get(nHeroe).getNombrePersonaje());
+            System.out.println(
+                    "\n\t*** El Ganador del combate es: " + mapaHeroes.get(nHeroe).getNombrePersonaje() + " ***\n");
     }
 
     private void combatirLHvLV(int nLigaHeroe, int nLigaVillano, Caracteristica nCaracteristica)
@@ -847,12 +892,15 @@ public class Menu {
         int resultado;
         resultado = buscarLigaHeroe(nLigaHeroe).competir(buscarLigaVillano(nLigaVillano), nCaracteristica);
         if (resultado == -1)
-            System.out.println("Ganó " + mapaLigasVillanos.get(nLigaVillano).getNombrePersonaje());
+            System.out.println("\n\t*** El Ganador del combate es: "
+                    + mapaLigasVillanos.get(nLigaVillano).getNombrePersonaje() + " ***\n");
         if (resultado == 0)
-            System.out.println("Hubo empate entre " + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje() + "y"
+            System.out.println("\n\t*** Hubo EMPATE entre los competidores "
+                    + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje() + " y "
                     + mapaVillanos.get(nLigaVillano).getNombrePersonaje());
         if (resultado == 1)
-            System.out.println("Ganó Independiente: " + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje());
+            System.out.println("\n\t*** El Ganador del combate es: "
+                    + mapaLigasHeroes.get(nLigaHeroe).getNombrePersonaje() + " ***\n");
     }
 
     private Caracteristica buscarCaracteristica(String nCaracteristica) throws LineaErroneaEx {
@@ -874,21 +922,21 @@ public class Menu {
         }
     }
 
-    private void mostrarLigasHeroes() {
-        System.out.println("-- Mostrando Ligas de Héroes -- ");
-        for (Entry<Integer, Liga> competidor : mapaLigasHeroes.entrySet()) {
-            System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
-        }
-    }
-
     private void mostrarVillanos() {
         for (Entry<Integer, Competidor> competidor : mapaVillanos.entrySet()) {
             System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
         }
     }
 
+    private void mostrarLigasHeroes() {
+        System.out.println("\n\t [ LISTADO LIGAS DE HÉROES ]\n");
+        for (Entry<Integer, Liga> competidor : mapaLigasHeroes.entrySet()) {
+            System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
+        }
+    }
+
     private void mostrarLigasVillanos() {
-        System.out.println("-- Mostrando Ligas de Villanos -- ");
+        System.out.println("\n\t [ LISTADO LIGAS DE VILLANOS ]\n");
         for (Entry<Integer, Liga> competidor : mapaLigasVillanos.entrySet()) {
             System.out.println(competidor.getKey() + " --> " + competidor.getValue().getNombrePersonaje());
         }
@@ -912,7 +960,7 @@ public class Menu {
 
     private void validarInput(String s) throws LineaErroneaEx {
         if (s.isBlank() || s.isEmpty() || s == null || s.equals(null))
-            throw new LineaErroneaEx("Los valores ingresados no son correctos.");
+            throw new LineaErroneaEx("Los valores ingresados no son correctos. \n");
     }
 
     /**
@@ -925,7 +973,8 @@ public class Menu {
 
         Scanner entradaArchivo = new Scanner(System.in);
         try {
-            System.out.println("## CARGAR Archivo \nPor favor indique la ruta del archivo:");
+            System.out.println("\n\t [ CARGAR Archivo ]");
+            System.out.println("\nPor favor indique la ruta del archivo:");
             String rutaArchivo = entradaArchivo.nextLine();
             if (!rutaArchivo.isEmpty()) {
                 cargarArchivo(rutaArchivo);
@@ -948,7 +997,8 @@ public class Menu {
 
         Scanner entradaArchivo = new Scanner(System.in);
         try {
-            System.out.println("## CARGAR Archivo \nPor favor indique la ruta del archivo:");
+            System.out.println("\n\t [ CARGAR Archivo ]");
+            System.out.println("\nPor favor indique la ruta del archivo:");
             String rutaArchivo = entradaArchivo.nextLine();
             if (!rutaArchivo.isEmpty()) {
                 cargarArchivoParaLiga(rutaArchivo);
@@ -968,7 +1018,7 @@ public class Menu {
                 try {
                     linea = linea.trim();
                     if (linea.isEmpty() || linea.isBlank())
-                        throw new LineaErroneaEx("La linea esta vacia.");
+                        throw new LineaErroneaEx("La linea esta vacia. \n");
                     crearCompetidorPorArchivo(linea);
                 } catch (LineaErroneaEx e) {
                     System.err.println(e);
@@ -999,7 +1049,7 @@ public class Menu {
                 try {
                     linea = linea.trim();
                     if (linea.isEmpty() || linea.isBlank())
-                        throw new LineaErroneaEx("La linea esta vacia.");
+                        throw new LineaErroneaEx("La línea está vacía.\n");
                     crearLigaPorArchivo(linea);
                 } catch (LineaErroneaEx e) {
                     System.err.println(e);
@@ -1032,36 +1082,36 @@ public class Menu {
         if (!lineaLeida[0].toLowerCase().trim().equals("héroe")
                 && !lineaLeida[0].toLowerCase().trim().equals("heroe")
                 && !lineaLeida[0].toLowerCase().trim().equals("villano")) {
-            throw new LineaErroneaEx("Competidor no cargado: tipo de competidor inválido.");
+            throw new LineaErroneaEx("Competidor no cargado: tipo de competidor inválido.\n");
         }
 
         if (lineaLeida[1].isEmpty() || lineaLeida[1].isBlank()) {
-            throw new LineaErroneaEx("Competidor no cargado: nombre real no encontrado.");
+            throw new LineaErroneaEx("Competidor no cargado: nombre real no encontrado.\n");
         }
         String nombreR = lineaLeida[1].trim();
 
         if (lineaLeida[2].isEmpty() || lineaLeida[2].isBlank()) {
-            throw new LineaErroneaEx("Competidor no cargado: nombre de personaje no encontrado.");
+            throw new LineaErroneaEx("Competidor no cargado: nombre de personaje no encontrado.\n");
         }
         String nombreP = lineaLeida[2].trim();
 
         if (lineaLeida[3].isEmpty() || lineaLeida[3].isBlank()) {
-            throw new LineaErroneaEx("Competidor no cargado: nombre no encontrada.");
+            throw new LineaErroneaEx("Competidor no cargado: nombre no encontrada.\n");
         }
         double v = Double.parseDouble(lineaLeida[3].trim());
 
         if (lineaLeida[4].isEmpty() || lineaLeida[4].isBlank()) {
-            throw new LineaErroneaEx("Competidor no cargado: fuerza no encontrada.");
+            throw new LineaErroneaEx("Competidor no cargado: fuerza no encontrada.\n");
         }
         double f = Double.parseDouble(lineaLeida[4].trim());
 
         if (lineaLeida[5].isEmpty() || lineaLeida[5].isBlank()) {
-            throw new LineaErroneaEx("Competidor no cargado: resistencia no encontrada.");
+            throw new LineaErroneaEx("Competidor no cargado: resistencia no encontrada.\n");
         }
         double r = Double.parseDouble(lineaLeida[5].trim());
 
         if (lineaLeida[6].isEmpty() || lineaLeida[6].isBlank()) {
-            throw new LineaErroneaEx("Competidor no cargado: destreza no encontrada.");
+            throw new LineaErroneaEx("Competidor no cargado: destreza no encontrada.\n");
         }
         double d = Double.parseDouble(lineaLeida[6].trim());
 
@@ -1085,7 +1135,7 @@ public class Menu {
         String[] lineaLeida = linea.split(",");
 
         if (lineaLeida[0].isEmpty() || lineaLeida[0].isBlank()) {
-            throw new LineaErroneaEx("Liga no cargada: nombre no encontrado.");
+            throw new LineaErroneaEx("Liga no cargada: nombre no encontrado.\n");
         }
         String nombreLiga = lineaLeida[0].trim();
 
@@ -1093,7 +1143,7 @@ public class Menu {
 
         for (int i = 1; i < lineaLeida.length; i++) {
             if (lineaLeida[i].isEmpty() || lineaLeida[i].isBlank()) {
-                throw new LineaErroneaEx("Competidor no cargado: nombre de personaje no encontrado.");
+                throw new LineaErroneaEx("Competidor no cargado: nombre de personaje no encontrado.\n");
             }
             String nombrePersonaje = lineaLeida[i].trim();
             for (Competidor competidor : conjuntoCompetidores) {
@@ -1114,8 +1164,11 @@ public class Menu {
     }
 
     /**
-     * Guarda la agenda completa en disco, en el archivo especificado como parámetro
-     * Con el siguiente formato. Una línea por competidor
+     * Guarda la lista de competidores completa en disco, en el archivo especificado
+     * como parámetro
+     * Con el siguiente formato. Una línea por competidor:
+     * Héroe/Villano, NombreReal, NombrePersonaje, Velocidad, Fuerza, Resistencia,
+     * Destreza
      * 
      * @param pArchivo nombre del archivo (path absoluto o relativo
      *                 a la carpeta src del proyecto
