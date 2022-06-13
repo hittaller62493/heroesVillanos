@@ -1,9 +1,16 @@
 package clases;
 
 import java.util.Comparator;
+/*
+ * Comparador de fuerza que utiliza un comparador de competidor.
+ */
 
 public class ComparatorFuerza implements Comparator<Competidor> {
 
+	/*
+	 * @return comparacion de un competidor por su fuerza.
+	 * @param competidor c1 y c2.
+	 */
 	@Override
 	public int compare(Competidor c1, Competidor c2) {
 
