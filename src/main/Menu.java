@@ -29,9 +29,7 @@ public class Menu {
 
     Set<Competidor> conjuntoCompetidores = new HashSet<>();
 
-    TreeMap<Competidor, List<Caracteristica>> mapaGeneralizado = new TreeMap<Competidor, List<Caracteristica>>();
-
-    public void menu3() {
+    private void menuPrincipal() {
         Scanner entrada = new Scanner(System.in);
         int opcion = 0;
         do {
@@ -227,8 +225,8 @@ public class Menu {
             System.err.println(e);
         }
 
-    } 
-   
+    }
+
     private void menuCargarArchivo() throws IOException, NombreInvalidoEx, CaracteristicaInvalidaEx {
 
         Scanner entradaArchivo = new Scanner(System.in);
@@ -435,7 +433,6 @@ public class Menu {
         System.out.println("\t-----------------------------------------");
     }
 
-
     private void menuLigaVCompetidor() throws MismoTipoCompetidorEx, LineaErroneaEx {
         Scanner entradaMenuLiga = new Scanner(System.in);
         int opcionML = 0;
@@ -496,7 +493,6 @@ public class Menu {
         }
 
     }
-
 
     private void menuDeCompetidoresOrdenados() {
         Scanner entradaMenuCompetidoresOrdenados = new Scanner(System.in);
@@ -783,7 +779,7 @@ public class Menu {
             nVillano = scanner.nextInt();
             System.out.println("\n# Elegir Característica para combatir: ");
             caracteristica = seleccionarCaracteristicaMenu();
-            combatir(nHeroe, nVillano, caracteristica);
+            combatirPvP(nHeroe, nVillano, caracteristica);
         } catch (InputMismatchException e) {
             System.err.print("Datos Incorrectos");
         }
@@ -852,7 +848,7 @@ public class Menu {
      * Métodos para combatir
      */
 
-    private void combatir(int nHeroe, int nVillano, Caracteristica nCaracteristica) throws MismoTipoCompetidorEx {
+    private void combatirPvP(int nHeroe, int nVillano, Caracteristica nCaracteristica) throws MismoTipoCompetidorEx {
         int resultado;
         resultado = buscarHeroe(nHeroe).competir(buscarVillano(nVillano), nCaracteristica);
         if (resultado == -1)
@@ -957,18 +953,12 @@ public class Menu {
         return mapaLigasVillanos.get(villanoBuscado);
     }
 
-    private void validarInput(String s) throws LineaErroneaEx {
-        if (s.isBlank() || s.isEmpty() || s == null || s.equals(null))
-            throw new LineaErroneaEx("Los valores ingresados no son correctos. \n");
-    }
-
     /**
      * @throws IOException
      * @throws CaracteristicaInvalidaEx
      * @throws NombreInvalidoEx
      * @post: Carga el archivo desde la ruta especificada.
      */
-
 
     /**
      * @throws IOException
@@ -1239,7 +1229,7 @@ public class Menu {
     public static void main(String[] args) {
         Menu menu = new Menu();
 
-        menu.menu3();
+        menu.menuPrincipal();
 
     }
 }
